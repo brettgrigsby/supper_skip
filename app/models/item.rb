@@ -9,6 +9,8 @@ class Item < ActiveRecord::Base
 
   validates :price, presence: true
 
+  belongs_to :restaurant
+
   has_many :categorizations
   has_many :categories, through: :categorizations
 
