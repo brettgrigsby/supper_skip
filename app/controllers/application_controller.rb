@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  helper_method :current_user, :signed_in?, :order
 
   def routing_error
     render "404", :status => 404
@@ -15,7 +16,7 @@ class ApplicationController < ActionController::Base
     order.update_attribute(:user_id, user.id)
   end
 
-  helper_method def signed_in?
+  def signed_in?
     !current_user.nil?
   end
 
@@ -23,7 +24,7 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
-  helper_method def current_user
+  def current_user
     @current_user ||= begin
       remember_token = User.digest(cookies.signed[:remember_token])
       User.find_by(remember_token: remember_token)
@@ -38,7 +39,7 @@ class ApplicationController < ActionController::Base
     session.clear
   end
 
-  helper_method def order
+  def order
     @order ||= (_session_order || _create_order)
   end
 
