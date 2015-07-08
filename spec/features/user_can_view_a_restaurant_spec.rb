@@ -14,5 +14,15 @@ describe 'a restaurant', type: :feature do
     visit restaurant_path(restaurant)
     expect(current_path).to eq('/restaurants/testy')
   end
+
+  it 'has links to its own categories' do
+    restaurant.categories.create!(name: "birds")
+    new = Restaurant.create!(name: "new", description: "thing", slug: "slugggg", user_id: 1)
+    new.categories.create!(name: "gum")
+    visit restaurant_path(restaurant)
+
+    expect(page).to have_content("birds")
+    expect(page).not_to have_content("gum")
+  end
 end
 
