@@ -113,6 +113,12 @@ Order.create!([
   {delivery: true, user_id: 2, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
   {delivery: true, user_id: 4, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
   {delivery: true, user_id: 5, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
+  {delivery: true, user_id: 4, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
+  {delivery: true, user_id: 3, aasm_state: "basket", ccn: nil, expdate: nil, card_name: nil},
+  {delivery: true, user_id: 1, aasm_state: "basket", ccn: nil, expdate: nil, card_name: nil},
+  {delivery: true, user_id: 2, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
+  {delivery: true, user_id: 4, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
+  {delivery: true, user_id: 5, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
   {delivery: true, user_id: 4, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil}
 ])
 OrderItem.create!([

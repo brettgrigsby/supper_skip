@@ -28,7 +28,6 @@ Rails.application.routes.draw do
     put '/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
 
-  root  'pages#home'
   get   'menu',              to: 'items#index'
   match '/about_us',         to: 'pages#about_us',    via: 'get'
   match '/signup',           to: 'users#new',         via: 'get'
@@ -42,4 +41,7 @@ Rails.application.routes.draw do
   delete '/admin/:id/orders', to: 'admin/orders#delete_item', as: "admin_delete_order_item"
   put   '/admin/order_items/:id', to: 'admin/order_items#update'
   match "*a",                to: 'errors#routing_error', via: 'get'
+
+  root to: 'restaurants#index'
+  #root  'pages#home'
 end
