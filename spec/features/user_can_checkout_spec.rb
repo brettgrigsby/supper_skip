@@ -40,7 +40,7 @@ describe 'A user who is logged in' do
     expect(page).to have_content('Confirm Order')
   end
 
-  it 'can add addresses' do
+  xit 'can add addresses' do
     click_on('Proceed to Checkout')
     fill_in 'address[street_1]', with: '123 Main St.'
     fill_in 'address[city]', with: 'Denver'
