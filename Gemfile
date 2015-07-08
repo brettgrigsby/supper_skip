@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.2.2'
 
 gem 'thin'
 gem 'rails_12factor'
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.11'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
@@ -18,6 +18,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'paperclip', "~> 4.1"
 gem 'aasm'
 gem 'haml-rails'
+gem 'eventmachine', '~> 1.0.7'
 
 group :development, :test do
   gem 'rspec-rails'
