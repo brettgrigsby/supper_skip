@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'thin'
-gem 'rails_12factor'
 gem 'rails', '4.1.11'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '~> 4.0.3'
@@ -43,4 +42,5 @@ end
 
 group :production do
   gem 'pg'
+  gem 'rails_12factor'
 end
