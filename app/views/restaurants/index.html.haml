@@ -1,0 +1,6 @@
+
+-@restaurants.each do |restaurant|
+  %h1= restaurant.name
+  %h3= restaurant.description
+  %br
+  =render partial: 'layouts/shared/marketing_containers'

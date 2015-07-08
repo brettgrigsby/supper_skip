@@ -12,7 +12,6 @@ describe 'a restaurant', type: :feature do
 
   it 'has a slug in its url' do
     visit restaurant_path(restaurant)
-
     expect(current_path).to eq('/restaurants/testy')
   end
 end
