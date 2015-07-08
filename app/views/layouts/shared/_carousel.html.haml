@@ -8,8 +8,8 @@
       %img{:alt => "First slide", :src => "http://warnerboutique.com/wp-content/uploads/Bald-Eagle-Widescreen-Wallpaper.jpg"}
         .container
           .carousel-caption
-            %h1 Endangered Eats
-            %h3 Get Them Before They're Gone.
+            %h1= restaurant.name
+            %h3= restaurant.description
             %p
               %a.btn.btn-lg.btn-primary{:href => "/menu", :role => "button"} View Our Menu
     .item

@@ -170,3 +170,8 @@ User.create!([
   {first_name: "name", last_name: "name", email: "abcde@123.com", username: nil, password: "password", role: nil},
   {first_name: "Bald", last_name: "Eagle", email: "bald@eagle.com", username: nil, password: "password", role: nil}
 ])
+Restaurant.create!([
+  {name: "Endangered Eats", description: "Get em before they're gone!", slug: "e-eats", user_id: 1},
+  {name: "Jorge's Sandwiches", description: "We start with bread, and then add meat!", slug: "js-sandwiches", user_id: 2},
+  {name: "G'norath's Tavern", description: "Our steaks have +2 against hunger!", slug: "rollin-twenties", user_id: 2}
+])

@@ -4,4 +4,8 @@ class Restaurant < ActiveRecord::Base
 
   belongs_to :user
   has_many :items
+
+  def to_param
+    slug
+  end
 end
