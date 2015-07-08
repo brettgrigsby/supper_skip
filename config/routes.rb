@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :addresses
+  # resources :addresses
 
   namespace :admin do
     resources :items do
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       end
     end
     resources :categories
-    resources :orders, only: [:index, :show, :edit, :update]
+    resources :orders, only: [:index, :show]
     put '/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
 
@@ -43,5 +43,4 @@ Rails.application.routes.draw do
   match "*a",                to: 'errors#routing_error', via: 'get'
 
   root to: 'restaurants#index'
-  #root  'pages#home'
 end
