@@ -28,6 +28,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'guard-rspec'
   gem 'seed_dump'
+  gem 'traceroute'
 end
 
 group :development do

@@ -40,15 +40,6 @@ describe 'A user who is logged in' do
     expect(page).to have_content('Confirm Order')
   end
 
-  xit 'can add addresses' do
-    click_on('Proceed to Checkout')
-    fill_in 'address[street_1]', with: '123 Main St.'
-    fill_in 'address[city]', with: 'Denver'
-    fill_in 'address[state]', with: 'CO'
-    fill_in 'address[zip]', with: 123456
-    click_on('Save Address')
-    expect(page).to have_content('123 Main St.')
-  end
 
   it 'can add payment info' do
     click_on('Proceed to Checkout')
