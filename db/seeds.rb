@@ -1,65 +1,19 @@
-Categorization.create!([
-  {item_id: 3, category_id: 1},
-  {item_id: 3, category_id: 9},
-  {item_id: 1, category_id: 1},
-  {item_id: 1, category_id: 7},
-  {item_id: 2, category_id: 2},
-  {item_id: 2, category_id: 6},
-  {item_id: 4, category_id: 3},
-  {item_id: 5, category_id: 4},
-  {item_id: 6, category_id: 2},
-  {item_id: 6, category_id: 7},
-  {item_id: 7, category_id: 7},
-  {item_id: 7, category_id: 3},
-  {item_id: 8, category_id: 4},
-  {item_id: 9, category_id: 1},
-  {item_id: 9, category_id: 7},
-  {item_id: 10, category_id: 6},
-  {item_id: 10, category_id: 3},
-  {item_id: 11, category_id: 4},
-  {item_id: 11, category_id: 8},
-  {item_id: 12, category_id: 8},
-  {item_id: 12, category_id: 2},
-  {item_id: 13, category_id: 1},
-  {item_id: 13, category_id: 9},
-  {item_id: 14, category_id: 6},
-  {item_id: 14, category_id: 3},
-  {item_id: 15, category_id: 1},
-  {item_id: 15, category_id: 8},
-  {item_id: 16, category_id: 8},
-  {item_id: 16, category_id: 6},
-  {item_id: 16, category_id: 3},
-  {item_id: 17, category_id: 3},
-  {item_id: 17, category_id: 8},
-  {item_id: 17, category_id: 6},
-  {item_id: 18, category_id: 5},
-  {item_id: 18, category_id: 4},
-  {item_id: 19, category_id: 6},
-  {item_id: 19, category_id: 8},
-  {item_id: 19, category_id: 1},
-  {item_id: 20, category_id: 6},
-  {item_id: 20, category_id: 3},
-  {item_id: 21, category_id: 5},
-  {item_id: 21, category_id: 8},
-  {item_id: 21, category_id: 3},
-  {item_id: 22, category_id: 6},
-  {item_id: 22, category_id: 8},
-  {item_id: 22, category_id: 3},
-  {item_id: 23, category_id: 5},
-  {item_id: 23, category_id: 8},
-  {item_id: 23, category_id: 1}
+Restaurant.create!([
+  {name: "Endangered Eats", description: "Get em before they're gone!", slug: "e-eats", user_id: 1},
+  {name: "Jorge's Sandwiches", description: "We start with bread, and then add meat!", slug: "js-sandwiches", user_id: 2},
+  {name: "G'norath's Tavern", description: "Our steaks have +2 against hunger!", slug: "rollin-twenties", user_id: 2}
 ])
 
 Category.create!([
-  {name: "Appetizers"},
-  {name: "Lunch"},
-  {name: "Dinner"},
-  {name: "Dessert"},
-  {name: "Bugs"},
-  {name: "Birds"},
-  {name: "Cute"},
-  {name: "Local"},
-  {name: "Gluten Free"}
+  {name: "Appetizers", restaurant_id: 1},
+  {name: "Lunch", restaurant_id: 1},
+  {name: "Dinner", restaurant_id: 1},
+  {name: "Dessert", restaurant_id: 2},
+  {name: "Bugs", restaurant_id: 2},
+  {name: "Birds", restaurant_id: 2},
+  {name: "Cute", restaurant_id: 3},
+  {name: "Local", restaurant_id: 3},
+  {name: "Gluten Free", restaurant_id: 3}
 ])
 
 Item.create!([
@@ -92,6 +46,67 @@ Item.all.each do |item|
   item.restaurant_id = (rand(3) + 1)
   item.save
 end
+
+Item.all.each do |item|
+  item.category = Category.where(restaurant_id: item.restaurant_id).sample
+  item.save
+end
+
+#Categorization.create!([
+#  {item_id: 3, category_id: 1},
+#  {item_id: 3, category_id: 9},
+#  {item_id: 1, category_id: 1},
+#  {item_id: 1, category_id: 7},
+#  {item_id: 2, category_id: 2},
+#  {item_id: 2, category_id: 6},
+#  {item_id: 4, category_id: 3},
+#  {item_id: 5, category_id: 4},
+#  {item_id: 6, category_id: 2},
+#  {item_id: 6, category_id: 7},
+#  {item_id: 7, category_id: 7},
+#  {item_id: 7, category_id: 3},
+#  {item_id: 8, category_id: 4},
+#  {item_id: 9, category_id: 1},
+#  {item_id: 9, category_id: 7},
+#  {item_id: 10, category_id: 6},
+#  {item_id: 10, category_id: 3},
+#  {item_id: 11, category_id: 4},
+#  {item_id: 11, category_id: 8},
+#  {item_id: 12, category_id: 8},
+#  {item_id: 12, category_id: 2},
+#  {item_id: 13, category_id: 1},
+#  {item_id: 13, category_id: 9},
+#  {item_id: 14, category_id: 6},
+#  {item_id: 14, category_id: 3},
+#  {item_id: 15, category_id: 1},
+#  {item_id: 15, category_id: 8},
+#  {item_id: 16, category_id: 8},
+#  {item_id: 16, category_id: 6},
+#  {item_id: 16, category_id: 3},
+#  {item_id: 17, category_id: 3},
+#  {item_id: 17, category_id: 8},
+#  {item_id: 17, category_id: 6},
+#  {item_id: 18, category_id: 5},
+#  {item_id: 18, category_id: 4},
+#  {item_id: 19, category_id: 6},
+#  {item_id: 19, category_id: 8},
+#  {item_id: 19, category_id: 1},
+#  {item_id: 20, category_id: 6},
+#  {item_id: 20, category_id: 3},
+#  {item_id: 21, category_id: 5},
+#  {item_id: 21, category_id: 8},
+#  {item_id: 21, category_id: 3},
+#  {item_id: 22, category_id: 6},
+#  {item_id: 22, category_id: 8},
+#  {item_id: 22, category_id: 3},
+#  {item_id: 23, category_id: 5},
+#  {item_id: 23, category_id: 8},
+#  {item_id: 23, category_id: 1}
+#])
+
+
+
+
 
 Order.create!([
   {delivery: true, user_id: 1, aasm_state: "cancelled", ccn: nil, expdate: nil, card_name: nil},
@@ -134,47 +149,6 @@ Order.all.each do |order|
   order.order_items.create!(item_id: item.id, quantity: (rand(2) + 1))
 end
 
-#OrderItem.create!([
-#  {order_id: 2, item_id: 23, quantity: 1},
-#  {order_id: 3, item_id: 21, quantity: 1},
-#  {order_id: 3, item_id: 22, quantity: 1},
-#  {order_id: 3, item_id: 14, quantity: 1},
-#  {order_id: 4, item_id: 5, quantity: 1},
-#  {order_id: 4, item_id: 23, quantity: 1},
-#  {order_id: 4, item_id: 3, quantity: 1},
-#  {order_id: 5, item_id: 3, quantity: 1},
-#  {order_id: 5, item_id: 5, quantity: 1},
-#  {order_id: 5, item_id: 7, quantity: 1},
-#  {order_id: 17, item_id: 8, quantity: 1},
-#  {order_id: 17, item_id: 6, quantity: 1},
-#  {order_id: 18, item_id: 23, quantity: 1},
-#  {order_id: 18, item_id: 13, quantity: 1},
-#  {order_id: 19, item_id: 15, quantity: 1},
-#  {order_id: 19, item_id: 7, quantity: 2},
-#  {order_id: 12, item_id: 2, quantity: 1},
-#  {order_id: 14, item_id: 13, quantity: 1},
-#  {order_id: 14, item_id: 19, quantity: 1},
-#  {order_id: 5, item_id: 5, quantity: 1},
-#  {order_id: 5, item_id: 22, quantity: 1},
-#  {order_id: 6, item_id: 18, quantity: 1},
-#  {order_id: 16, item_id: 6, quantity: 1},
-#  {order_id: 7, item_id: 2, quantity: 1},
-#  {order_id: 11, item_id: 12, quantity: 1},
-#  {order_id: 1, item_id: 12, quantity: 1},
-#  {order_id: 18, item_id: 12, quantity: 1},
-#  {order_id: 18, item_id: 12, quantity: 1},
-#  {order_id: 1, item_id: 4, quantity: 1},
-#  {order_id: 2, item_id: 8, quantity: 1},
-#  {order_id: 3, item_id: 3, quantity: 2},
-#  {order_id: 14, item_id: 17, quantity: 1},
-#  {order_id: 4, item_id: 20, quantity: 1},
-#  {order_id: 19, item_id: 12, quantity: 1},
-#  {order_id: 19, item_id: 12, quantity: 1},
-#  {order_id: 20, item_id: 12, quantity: 1},
-#  {order_id: 16, item_id: 12, quantity: 1},
-#  {order_id: 18, item_id: 12, quantity: 1},
-#  {order_id: 12, item_id: 12, quantity: 1}
-#])
 
 User.create!([
   {first_name: "Rachel", last_name: "Warbelow", email: "demo+rachel@jumpstartlab.com", username: nil, password: "password", role: "user"},
@@ -191,8 +165,3 @@ User.create!([
   {first_name: "Bald", last_name: "Eagle", email: "bald@eagle.com", username: nil, password: "password", role: nil}
 ])
 
-Restaurant.create!([
-  {name: "Endangered Eats", description: "Get em before they're gone!", slug: "e-eats", user_id: 1},
-  {name: "Jorge's Sandwiches", description: "We start with bread, and then add meat!", slug: "js-sandwiches", user_id: 2},
-  {name: "G'norath's Tavern", description: "Our steaks have +2 against hunger!", slug: "rollin-twenties", user_id: 2}
-])
