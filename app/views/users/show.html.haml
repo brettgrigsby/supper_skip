@@ -4,7 +4,12 @@
   %h3 Your Info
   %h5= current_user.name
   %h5= current_user.email
+  .col-sm-6.col-md-4
+  %br
+    = link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
 
+  - if signed_in?
+    = link_to("Create New Restaurant", new_restaurant_path)
   = render partial: 'users/previous_orders'
 
 - if current_user.restaurants
