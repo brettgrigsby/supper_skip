@@ -28,6 +28,13 @@ describe 'a users restaurant', type: :feature do
     click_link("edit Testaurant")
 
     expect(current_path).to eq(edit_restaurant_path(restaurant))
+
+    fill_in("Testaurant", with: "Changed Name")
+    click_button("Update My Restaurant")
+
+    expect(current_path).to eq(restaurant_path(restaurant))
+    expect(page).to have_content("Changed Name")
+    expect(page).not_to have_content("Testaurant")
   end
 end
 
