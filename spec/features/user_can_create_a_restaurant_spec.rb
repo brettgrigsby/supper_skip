@@ -3,10 +3,10 @@ require_relative 'feature_spec_helper'
 describe 'a new restaurant', type: :feature do
   before do
     User.create(first_name: "Jane",
-      last_name: "Doe",
-      email: "jane@jane.com",
-      password: "password",
-      role: "user")
+                last_name: "Doe",
+                email: "jane@jane.com",
+                password: "password",
+                role: "user")
 
     visit "/"
     first(:link, "Login").click
@@ -17,10 +17,12 @@ describe 'a new restaurant', type: :feature do
   end
 
   it 'has a create button' do
+    visit root_path
     expect(page).to have_link("Create A Restaurant")
   end
 
   it 'takes you to a restaurant create page' do
+    visit root_path
     click_link("Create A Restaurant")
 
     expect(page).to have_content("Create Your Restaurant")
