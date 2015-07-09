@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(version: 20150708205608) do
 
   add_index "addresses", ["order_id"], name: "index_addresses_on_order_id"
 
+  create_table "cart_items", force: true do |t|
+    t.integer  "cart_id",    null: false
+    t.integer  "item_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "carts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
