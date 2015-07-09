@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708205608) do
+ActiveRecord::Schema.define(version: 20150709172603) do
 
   create_table "addresses", force: true do |t|
     t.integer  "order_id"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20150708205608) do
   end
 
   create_table "orders", force: true do |t|
-    t.boolean  "delivery",   limit: 255
+    t.boolean  "delivery",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -92,8 +92,10 @@ ActiveRecord::Schema.define(version: 20150708205608) do
     t.string   "expdate"
     t.string   "card_name"
     t.integer  "address_id"
+    t.integer  "restaurant_id"
   end
 
+  add_index "orders", ["restaurant_id"], name: "index_orders_on_restaurant_id"
   add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
   create_table "restaurants", force: true do |t|
