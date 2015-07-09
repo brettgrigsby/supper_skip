@@ -1,0 +1,16 @@
+.container
+  .row.col-lg-6.col-lg-offset-6
+    %h2.form-newrestaurant-heading Create Your Restaurant
+    = form_for(@restaurant, html: { class: 'form-newrestaurant'}) do |f|
+      - if @restaurant.errors.any?
+        %ul#errors
+          - @restaurant.errors.full_messages.each do |error|
+            %li= error
+      = f.text_field :name, class: "form-control", placeholder: @restaurant.name
+      %br/
+      = f.text_field :description, class: "form-control", placeholder: @restaurant.description
+      %br/
+      = f.text_field :slug, class: "form-control", placeholder: @restaurant.slug
+      %br/
+      = f.submit "Update My Restaurant", class: "btn btn-med btn-block btn-primary", href: "edit_restaurant_path(@restaurant)"
+
