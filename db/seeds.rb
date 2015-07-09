@@ -48,7 +48,7 @@ Item.all.each do |item|
 end
 
 Item.all.each do |item|
-  item.category = Category.where(restaurant_id: item.restaurant_id).sample
+  item.categories << Category.where(restaurant_id: item.restaurant_id).sample
   item.save
 end
 
