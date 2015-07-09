@@ -36,6 +36,26 @@ describe 'a users restaurant', type: :feature do
     expect(page).to have_content("Changed Name")
     expect(page).not_to have_content("Testaurant")
   end
+
+  it 'cannot be edited by users outside of its creator' do
+    user2 = User.create!(first_name: "Other",
+			last_name: "Person",
+			email: "other@person.com",
+			password: "password")
+    restaurant.user = user
+    visit login_path
+    fill_in "email address", with: "other@person.com"
+    fill_in "password", with: "password"
+    click_button("Login")
+    visit user_path(user2)
+
+    expect(page).not_to have_content("edit Testaurant")
+
+    visit edit_restaurant_path(restaurant)
+
+    expect(status_code).to eq(404)
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+  end
 end
 
 

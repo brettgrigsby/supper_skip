@@ -9,6 +9,9 @@ class RestaurantsController < ApplicationController
   end
 
   def edit
+    unless current_user.restaurants.include?(@restaurant)
+      render :file => 'public/404.html', :status => :not_found, :layout => false
+    end
   end    
 
   def update
