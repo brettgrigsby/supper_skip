@@ -1,4 +1,5 @@
 class RestaurantsController < ApplicationController
+  before_action :check_slug, only: [:create]
   before_action :load_restaurant, only: [:show, :edit, :update]
 
   def index
@@ -12,7 +13,7 @@ class RestaurantsController < ApplicationController
     unless current_user.restaurants.include?(@restaurant)
       render :file => 'public/404.html', :status => :not_found, :layout => false
     end
-  end    
+  end
 
   def update
     if @restaurant.update(restaurant_params)
@@ -30,9 +31,13 @@ class RestaurantsController < ApplicationController
 
   def create
     @restaurant = Restaurant.new(restaurant_params)
+#    create_slug if @restaurant.slug.empty?
     if @restaurant.save
       flash[:success] = "You have created #{@restaurant.name}"
       redirect_to restaurant_path(@restaurant)
+    else
+      flash[:failure] = "There was a problem creating #{@restaurant.name}"
+      render :new
     end
   end
 
@@ -44,5 +49,11 @@ class RestaurantsController < ApplicationController
 
   def load_restaurant
     @restaurant = Restaurant.find_by(slug: params[:id])
+  end
+
+  def check_slug
+    if params[:restaurant][:slug].nil?
+      params[:restaurant][:slug] = restaurant[:name].parameterize
+    end
   end
 end
