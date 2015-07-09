@@ -5,4 +5,6 @@
   %h5= current_user.name
   %h5= current_user.email
 
+  - if signed_in?
+    = link_to("Create New Restaurant", new_restaurant_path)
   = render partial: 'users/previous_orders'
