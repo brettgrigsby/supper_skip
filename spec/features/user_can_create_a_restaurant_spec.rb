@@ -2,11 +2,11 @@ require_relative 'feature_spec_helper'
 
 describe 'a new restaurant', type: :feature do
   before do
-    @user = User.create(first_name: "Jane",
-      last_name: "Doe",
-      email: "jane@jane.com",
-      password: "password",
-      role: "user")
+    User.create(first_name: "Jane",
+                last_name: "Doe",
+                email: "jane@jane.com",
+                password: "password",
+                role: "user")
 
     visit "/"
     first(:link, "Login").click
