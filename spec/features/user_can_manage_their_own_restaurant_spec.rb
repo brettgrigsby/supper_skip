@@ -5,16 +5,29 @@ describe 'a users restaurant', type: :feature do
 				last_name: "money",
 				email: "test@best.com",
 				password: "password")}
-  let(:restaurant) { Restaurant.create!(name: "Testaurant", description: "tastes funny", slug: 'testy', user_id: 1) }
+  let(:restaurant) { Restaurant.create!(name: "Testaurant", description: "tastes funny", slug: 'testy', user_id: user.id) }
 
-  it 'has a show page with its info' do
+  it 'has a link to edit the restaurant' do
     restaurant.user = user
-    visit restaurant_path(restaurant)
+    visit login_path
+    fill_in "email address", with: "test@best.com"
+    fill_in "password", with: "password"
+    click_button("Login")
+    visit user_path(user)
 
-    expect(page).to have_content("Testaurant")
-    expect(page).to have_content("tastes funny")
+    expect(page).to have_link("edit Testaurant")
+  end
 
-    
+  it 'can be edited by the user that created it' do
+    restaurant.user = user
+    visit login_path
+    fill_in "email address", with: "test@best.com"
+    fill_in "password", with: "password"
+    click_button("Login")
+    visit user_path(user)
+    click_link("edit Testaurant")
+
+    expect(current_path).to eq(edit_restaurant_path(restaurant))
   end
 end
 
