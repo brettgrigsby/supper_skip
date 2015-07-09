@@ -12,5 +12,9 @@ RSpec.describe Restaurant, :type => :model do
       create :restaurant
       expect { create :restaurant }.to raise_exception ActiveRecord::RecordInvalid
     end
+
+    it 'as a unique slug' do
+
+    end
   end
 end
