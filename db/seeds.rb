@@ -1,9 +1,3 @@
-Address.create!([
-  {order_id: 3, street_1: "1510 Blake St", street_2: "", city: "Denver", state: "CO", zip: "80202"},
-  {order_id: 5, street_1: "asdf", street_2: "asdf", city: "sdf", state: "sadf", zip: "fds"},
-  {order_id: 3, street_1: "1510 Blake St", street_2: "", city: "Denver", state: "CO", zip: "80202"},
-  {order_id: 5, street_1: "asdf", street_2: "asdf", city: "sdf", state: "sadf", zip: "fds"}
-])
 Categorization.create!([
   {item_id: 3, category_id: 1},
   {item_id: 3, category_id: 9},
@@ -55,6 +49,7 @@ Categorization.create!([
   {item_id: 23, category_id: 8},
   {item_id: 23, category_id: 1}
 ])
+
 Category.create!([
   {name: "Appetizers"},
   {name: "Lunch"},
@@ -66,6 +61,7 @@ Category.create!([
   {name: "Local"},
   {name: "Gluten Free"}
 ])
+
 Item.create!([
   {title: "Koala Kebabs", description: "Marinated in Austrailian Aoili, with Bokchoy, Red Pepper, & Pineapple.", price: 2700, max_quantity: 500, scarcity: "endangered", image_file_name: 'http://ipad.wallpaperswiki.com/wp-content/uploads/2012/10/Koala-Bear-Portrait.jpg', image_content_type: nil, image_file_size: nil, image_updated_at: nil},
   {title: "Garlic Herb Bald Eagle", description: "Served on a bed of Arugula & Roasted Vegetables", price: 177600, max_quantity: 500, scarcity: "endangered", image_file_name: 'http://2.bp.blogspot.com/-ZeWjNkJJBtY/UF9h5OP7ESI/AAAAAAAABFE/57cHP6l4Lsw/s1600/eagle%202.jpg', image_content_type: nil, image_file_size: nil, image_updated_at: nil},
@@ -91,6 +87,9 @@ Item.create!([
   {title: "Grilled Greed Rusty Blackbird Bun", description: "Steamed Sesame Bun, Scallions & Miso-Pickled Cucumbers", price: 1700, max_quantity: 500, scarcity: "endangered", image_file_name: 'http://www.birds-of-north-america.net/images/rusty-blackbird-13.jpg', image_content_type: nil, image_file_size: nil, image_updated_at: nil},
   {title: "Uncompahgre Fritillary Butterfly", description: "Crispy Noodles, Lemongrass, Coconut Milk, Pea Shoots, & Cilantro", price: 1700, max_quantity: 500, scarcity: "endangered", image_file_name: 'http://www.naba.org/chapters/nabambc/species-data/Lycaena-phlaeas-photo-5.jpg', image_content_type: nil, image_file_size: nil, image_updated_at: nil}
 ])
+
+Item.all.each { |item| item.restaurant_id = (rand(3) + 1) }
+
 Order.create!([
   {delivery: true, user_id: 1, aasm_state: "cancelled", ccn: nil, expdate: nil, card_name: nil},
   {delivery: true, user_id: 2, aasm_state: "cancelled", ccn: nil, expdate: nil, card_name: nil},
@@ -121,47 +120,56 @@ Order.create!([
   {delivery: true, user_id: 5, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil},
   {delivery: true, user_id: 4, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil}
 ])
-OrderItem.create!([
-  {order_id: 2, item_id: 23, quantity: 1},
-  {order_id: 3, item_id: 21, quantity: 1},
-  {order_id: 3, item_id: 22, quantity: 1},
-  {order_id: 3, item_id: 14, quantity: 1},
-  {order_id: 4, item_id: 5, quantity: 1},
-  {order_id: 4, item_id: 23, quantity: 1},
-  {order_id: 4, item_id: 3, quantity: 1},
-  {order_id: 5, item_id: 3, quantity: 1},
-  {order_id: 5, item_id: 5, quantity: 1},
-  {order_id: 5, item_id: 7, quantity: 1},
-  {order_id: 17, item_id: 8, quantity: 1},
-  {order_id: 17, item_id: 6, quantity: 1},
-  {order_id: 18, item_id: 23, quantity: 1},
-  {order_id: 18, item_id: 13, quantity: 1},
-  {order_id: 19, item_id: 15, quantity: 1},
-  {order_id: 19, item_id: 7, quantity: 2},
-  {order_id: 12, item_id: 2, quantity: 1},
-  {order_id: 14, item_id: 13, quantity: 1},
-  {order_id: 14, item_id: 19, quantity: 1},
-  {order_id: 5, item_id: 5, quantity: 1},
-  {order_id: 5, item_id: 22, quantity: 1},
-  {order_id: 6, item_id: 18, quantity: 1},
-  {order_id: 16, item_id: 6, quantity: 1},
-  {order_id: 7, item_id: 2, quantity: 1},
-  {order_id: 11, item_id: 12, quantity: 1},
-  {order_id: 1, item_id: 12, quantity: 1},
-  {order_id: 18, item_id: 12, quantity: 1},
-  {order_id: 18, item_id: 12, quantity: 1},
-  {order_id: 1, item_id: 4, quantity: 1},
-  {order_id: 2, item_id: 8, quantity: 1},
-  {order_id: 3, item_id: 3, quantity: 2},
-  {order_id: 14, item_id: 17, quantity: 1},
-  {order_id: 4, item_id: 20, quantity: 1},
-  {order_id: 19, item_id: 12, quantity: 1},
-  {order_id: 19, item_id: 12, quantity: 1},
-  {order_id: 20, item_id: 12, quantity: 1},
-  {order_id: 16, item_id: 12, quantity: 1},
-  {order_id: 18, item_id: 12, quantity: 1},
-  {order_id: 12, item_id: 12, quantity: 1}
-])
+
+Order.all.each { |order| order.restaurant_id = (rand(3) + 1) }
+
+Order.all.each do |order|
+  item = Item.where(restaurant_id: order.restaurant_id).sample
+  order.order_items.create!(item_id: item.id, quantity: (rand(2) + 1))
+end
+
+#OrderItem.create!([
+#  {order_id: 2, item_id: 23, quantity: 1},
+#  {order_id: 3, item_id: 21, quantity: 1},
+#  {order_id: 3, item_id: 22, quantity: 1},
+#  {order_id: 3, item_id: 14, quantity: 1},
+#  {order_id: 4, item_id: 5, quantity: 1},
+#  {order_id: 4, item_id: 23, quantity: 1},
+#  {order_id: 4, item_id: 3, quantity: 1},
+#  {order_id: 5, item_id: 3, quantity: 1},
+#  {order_id: 5, item_id: 5, quantity: 1},
+#  {order_id: 5, item_id: 7, quantity: 1},
+#  {order_id: 17, item_id: 8, quantity: 1},
+#  {order_id: 17, item_id: 6, quantity: 1},
+#  {order_id: 18, item_id: 23, quantity: 1},
+#  {order_id: 18, item_id: 13, quantity: 1},
+#  {order_id: 19, item_id: 15, quantity: 1},
+#  {order_id: 19, item_id: 7, quantity: 2},
+#  {order_id: 12, item_id: 2, quantity: 1},
+#  {order_id: 14, item_id: 13, quantity: 1},
+#  {order_id: 14, item_id: 19, quantity: 1},
+#  {order_id: 5, item_id: 5, quantity: 1},
+#  {order_id: 5, item_id: 22, quantity: 1},
+#  {order_id: 6, item_id: 18, quantity: 1},
+#  {order_id: 16, item_id: 6, quantity: 1},
+#  {order_id: 7, item_id: 2, quantity: 1},
+#  {order_id: 11, item_id: 12, quantity: 1},
+#  {order_id: 1, item_id: 12, quantity: 1},
+#  {order_id: 18, item_id: 12, quantity: 1},
+#  {order_id: 18, item_id: 12, quantity: 1},
+#  {order_id: 1, item_id: 4, quantity: 1},
+#  {order_id: 2, item_id: 8, quantity: 1},
+#  {order_id: 3, item_id: 3, quantity: 2},
+#  {order_id: 14, item_id: 17, quantity: 1},
+#  {order_id: 4, item_id: 20, quantity: 1},
+#  {order_id: 19, item_id: 12, quantity: 1},
+#  {order_id: 19, item_id: 12, quantity: 1},
+#  {order_id: 20, item_id: 12, quantity: 1},
+#  {order_id: 16, item_id: 12, quantity: 1},
+#  {order_id: 18, item_id: 12, quantity: 1},
+#  {order_id: 12, item_id: 12, quantity: 1}
+#])
+
 User.create!([
   {first_name: "Rachel", last_name: "Warbelow", email: "demo+rachel@jumpstartlab.com", username: nil, password: "password", role: "user"},
   {first_name: "Jorge", last_name: "Tellez", email: "demo+jorge@jumpstartlab.com", username: "novohispano", password: "password", role: "user"},
@@ -176,6 +184,7 @@ User.create!([
   {first_name: "name", last_name: "name", email: "abcde@123.com", username: nil, password: "password", role: nil},
   {first_name: "Bald", last_name: "Eagle", email: "bald@eagle.com", username: nil, password: "password", role: nil}
 ])
+
 Restaurant.create!([
   {name: "Endangered Eats", description: "Get em before they're gone!", slug: "e-eats", user_id: 1},
   {name: "Jorge's Sandwiches", description: "We start with bread, and then add meat!", slug: "js-sandwiches", user_id: 2},
