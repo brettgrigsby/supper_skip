@@ -88,7 +88,10 @@ Item.create!([
   {title: "Uncompahgre Fritillary Butterfly", description: "Crispy Noodles, Lemongrass, Coconut Milk, Pea Shoots, & Cilantro", price: 1700, max_quantity: 500, scarcity: "endangered", image_file_name: 'http://www.naba.org/chapters/nabambc/species-data/Lycaena-phlaeas-photo-5.jpg', image_content_type: nil, image_file_size: nil, image_updated_at: nil}
 ])
 
-Item.all.each { |item| item.restaurant_id = (rand(3) + 1) }
+Item.all.each do |item| 
+  item.restaurant_id = (rand(3) + 1)
+  item.save
+end
 
 Order.create!([
   {delivery: true, user_id: 1, aasm_state: "cancelled", ccn: nil, expdate: nil, card_name: nil},
@@ -121,7 +124,10 @@ Order.create!([
   {delivery: true, user_id: 4, aasm_state: "ordered", ccn: nil, expdate: nil, card_name: nil}
 ])
 
-Order.all.each { |order| order.restaurant_id = (rand(3) + 1) }
+Order.all.each do |order| 
+  order.restaurant_id = (rand(3) + 1)
+  order.save
+end
 
 Order.all.each do |order|
   item = Item.where(restaurant_id: order.restaurant_id).sample
