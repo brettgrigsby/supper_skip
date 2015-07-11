@@ -1,5 +1,4 @@
 class RestaurantsController < ApplicationController
-  before_action :check_slug, only: [:create]
   before_action :load_restaurant, only: [:show, :edit, :update]
 
   def index
@@ -31,7 +30,7 @@ class RestaurantsController < ApplicationController
 
   def create
     @restaurant = Restaurant.new(restaurant_params)
-#    create_slug if @restaurant.slug.empty?
+    create_slug if @restaurant.slug.empty?
     if @restaurant.save
       flash[:success] = "You have created #{@restaurant.name}"
       redirect_to restaurant_path(@restaurant)
@@ -51,9 +50,7 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.find_by(slug: params[:id])
   end
 
-  def check_slug
-    if params[:restaurant][:slug].nil?
-      params[:restaurant][:slug] = restaurant[:name].parameterize
-    end
+  def create_slug
+    @restaurant.slug = @restaurant.name.parameterize
   end
 end
