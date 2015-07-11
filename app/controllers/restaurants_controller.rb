@@ -31,8 +31,12 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(restaurant_params)
     create_slug if @restaurant.slug.empty?
+    @restaurant.user = current_user
     if @restaurant.save
+      current_user.role = 'admin'
+      current_user.save(validate: false)
       flash[:success] = "You have created #{@restaurant.name}"
+
       redirect_to restaurant_path(@restaurant)
     else
       flash[:failure] = "There was a problem creating #{@restaurant.name}"
