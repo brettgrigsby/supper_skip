@@ -21,7 +21,6 @@ class Admin::ItemsController < AdminController
   def create
     @item = Item.new(item_params)
     @item.restaurant = @restaurant
-    binding.pry
     if @item.save
       redirect_to admin_restaurant_path(@restaurant)
     else
