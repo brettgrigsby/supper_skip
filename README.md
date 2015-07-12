@@ -1,143 +1,195 @@
-[![Code Climate](https://codeclimate.com/github/ericfransen/dinner_dash/badges/gpa.svg)](https://codeclimate.com/github/ericfransen/dinner_dash)
+# SUPPER SKIP
 
-```
-                      I0 - Coming Soon!/ Wire Framing
-                      I1 - Listing Items
-                      /\
-            Customer /  \ Admin
-        Add to cart /    \ CRUD Items
-   Delivery/pickup /      \ Categories
-   Status/History /        \ Orders
-                            \ Browsing
-                             \ Inactive items
-```
+## Multitenancy -- Iteration 1
 
-#Base Expectations
-##Unauthenticated Users
+### Registering a Restaurant:
 
-###ALLOWED TO:
-COMPLETED
-* ~~Browse all items~~
-* ~~Browse items by category~~
-* ~~Add an item to my cart~~
-* ~~View my cart~~
-* ~~Remove an item from my cart~~
-* ~~Increase the quantity of a item in my cart~~
-* ~~Log in, which does not clear the cart~~
+* As a registered user, I see an option to "register a new restaurant/store"
 
-###NOT ALLOWED TO:
+* When registering a restaurant, user must enter name, and description, slug (optional)
 
-* ~~view another user’s private data (such as current order, etc.) ~~
-* ~~Checkout (until they log in)~~
-* ~~View the administrator screens or use administrator functionality~~
-* ~~Make themselves an administrator~~
+* If no slug is entered, generate one for them using the dash-er-ized-lower-cased version of the restaurant name
 
-##Authenticated Non-Administrators
+* No 2 restaurants should be able to have the same slug or name
 
-###ALLOWED TO:
+### Viewing a Restaurant:
 
-* ~~do everything Unauthenticated Users can do except "log in"~~
-* ~~log out~~
-* ~~view their past orders with links to display each order~~
+* After registering a restaurant, I should be taken to its "homepage", which should have a unique URL using the restaurant's slug. 
+  (This could be done via a path, e.g. /restaurants/woraces-jerky-shop or via subdomains, e.g. woraces-jerky-shop.mysite.com)
+  
+* On the restaurant home page, I should see a list of all items associated with my restaurant.
 
-###ON THAT ORDER DISPLAY PAGE THERE ARE:
-* ~~items with quantity ordered and line-item subtotals~~
-* ~~links to each item description page~~
-* ~~the current status of the order~~
-* ~~order total price~~
-* ~~date/time order was submitted~~
-* ~~if completed or cancelled, display a timestamp when that action took place~~
+### Item/Order/User Relationships:
 
-###IF ANY ITEM IS RETIRED FROM THE MENU:
-* ~~they can still access the item page~~
-* ~~they cannot add it to a new cart~~
+* The restaurant's main page should show all those items that are attached to it.
+  (Indirectly, we can also think of a restaurant having its own collection of orders and customers via the items it sells, but we will leave it up to you to determine how this is modeled.)
 
-###NOT ALLOWED TO:
-* ~~view another user’s private data (such as current order, etc.)~~
-* ~~view the administrator screens or use administrator functionality~~
-* ~~make themselves an administrator~~
+### Managing a Restaurant
 
-##Administrators
+* As an owner of a restaurant I can edit/manage it by changing its basic info. Other users (including other owners of different restaurants) should not be able to modify my restaurant's info.
 
-###ALLOWED TO:
+* As an owner, I can create/edit/destroy items for my restaurant. These items should be attached to my specific restaurant, and should not appear on other restaurants' pages. They should appear on the main page for my restaurant.
 
-* ~~Create item listings including a name, description, price, and upload a photo~~
-* ~~Modify existing items’ name, description, price, and photo~~
-* ~~Create named categories for items (eg: "Small Plates")~~
-* ~~ Assign items to categories or remove them from categories. Products can belong to more than one category.~~
-* ~~Retire an item from being sold, which hides it from browsing by any non-administrator~~
+(Note that we'll be re-purposing the existing Admin functionality to work for individual restaurants. So whenver we talk about features for managing a restaurant from a store owner perspective, this should take place somewhere within the "admin" portion of the site.)
 
-###As an Admin, I can also view an order "dashboard" where I can:
+### Browsing Restaurants
 
-* See a listing of all orders with:
-* ~~the total number of orders by status~~
-* ~~links for each individual order~~
-* ~~filter orders to display by status type (for statuses "ordered", "paid", "cancelled", "completed")~~
-* ~~link to transition to a different status:~~
-* ~~link to "cancel" individual orders which are currently "ordered" or "paid"~~
-* ~~link to "mark as paid" orders which are "ordered"~~
-* ~~link to "mark as completed" individual orders which are currently "paid"~~
-* Access details of an individual order, including:
-* ~~Order date and time~~
-*~~Purchaser full name and email address~~
-For each item on the order:
-* ~~Name linked to the item page~~
-* ~~Quantity~~
-* ~~Price~~
-* ~~Line item subtotal~~
-* ~~Total for the order~~
-* ~~Status of the order~~
-*  Update an individual order
-*  View and edit orders; may change quantity or remove items from orders with the status of pending or paid
-*  Change the status of an order according to the rules as outlined above
+* A list of restaurants is  displayed on the user home page.
 
-###NOT ALLOWED TO:
+## Ordering -- Iteration 2
 
-~~Modify any personal data aside from their own~~
+* As a logged-in user, I can browse restaurants on the site and browse items sold by those restaurants. I can add items from multiple stores to my cart.
 
-##Data Validity
-*There are several types of entities in the system, each with certain required data. Any attempt to create or modify a record with invalid attributes should return the user to the input form with a validation error indicating the problem along with suggestions how to fix it.*
+* With items in my cart, when checking out, I should see the existing dinner dash order flow, with my items divided by the store to which they belong.
 
-###Item
+* Once I complete my order, I should land on an order display page showing my items ordered by restaurant, as well as total spent and order status.
 
-*  ~~An item must have a title, description, and price.~~
-*  ~~The title and description cannot be empty strings.~~
-*  ~~The title must be unique for all items in the system~~
-*  The price must be a valid decimal numeric value and greater than zero
-*  ~~The photo is optional. If not present, a stand-in photo is used.~~
-*  User
+(One question to consider is whether we model orders as a single record attached to multiple businesses via multiple items, or as individual records to separate items ordered for each business.)
 
-*  ~~A user must have a plausibly valid email address that is unique across all users~~
-*  ~~A user must have a full name that is not blank~~
-*  ~~A user may optionally provide a display name that must be no less than 2 characters long and no more than 32~~
+## Browsing and Categorization -- Iteration 3
 
-###Order
+* As a restaurant owner, I should be able to CRUD categories for my restaurant. My categories should be independent of those from other restaurants.
 
-*  ~~An order must belong to a user~~
-*  ~~An order must be for one or more of one or more items currently being sold~~
-*  An order is marked for pickup or delivery
-*  If marked for delivery, an order has an associated address with street number, street, city, state, and zip
+* When users browse my shop, they should see the items organized by categories and have the ability to filter on category.
 
-##Example Data
-*To support the evaluation process, please make the following available via the rake db:seed task in your application:*
+## Order Flow and Processing -- Iteration 4
 
-###Items
-*  At least 20 items of varying prices
-*  Some of the items should be attached to multiple categories
+* Customer order status should update as it changes.
 
-###Categories
-*  At least 5 categories with a varying number of member items
+Status suggestions:
+Paid
+Ready for Preparation
+Cancelled
+In Preparation
+Ready for Delivery
+Out for Delivery
+Delivered / Completed
+  
+* Once preparation begins for an order, it can no longer be cancelled.
 
-###Orders
-*  At least 10 sample orders, with at least two at each stage of fulfillment (ordered, completed, cancelled)
+* As a store owner, I can see a list of existing orders organized by current status (just as in Dinner Dash, but now for my specific store).
 
-###Users
-*  Normal user with full name "Rachel Warbelow", email address "demo+rachel@jumpstartlab.com", password of "password" and no display name
-*  Normal user with full name "Jeff", email address "demo+jeff@jumpstartlab.com", password of "password" and display name "j3"
-*  Normal user with full name "Jorge Tellez", email address "demo+jorge@jumpstartlab.com", password of "password" and display name "novohispano"
-*  User with admin priviliges with full name "Josh Cheek", email address "demo+josh@jumpstartlab.com", password of "password", and display name "josh"
+### New Restaurant Roles -- Cooks and Delivery People:
 
-#Submission Guidelines
-- *Your project must be "live" on the web for your evaluation. We recommend you deploy it on Heroku*
-- *Your README file on GitHub should contain a link to your live site*
-- *On the production site, the URL path /code should redirect the user to the GitHub repository*
+* As a restaurant owner, I have an option in my admin panel to add users as cooks or delivery people, and is done using their email addresses to prevent name duplication
+* If a user with the supplied email address already exists in the system, they should be added to my store with the specified role
+* If the user does not exist in the system, they should receive an email inviting them to register on the platform. Once they have done so, they should automatically be added to my store.
+* Cooks and Delivery People (user classification is "staff") should also be able to see the order status breakdown for restaurants to which they are attached.
+
+### Order Delivery Pipeline:
+
+* Once an order is paid, it's status should become "ready for preparation". As a cook, when viewing an order in this status, I should see an option to "prepare this order".
+  Clicking this should:
+    * Assign it to me as the preparer/cook
+    * Move its status to "in preparation"
+    
+* As the cook preparing a given order, I should see an option to mark it "ready for delivery". Doing this should update its status to "ready for delivery".
+
+* As a delivery person viewing a list of orders marked "ready for delivery", I should have an option to "deliver this order". Clicking this should assign the order to me as its deliverer and should mark it "out for delivery".
+
+* As the delivery person for an out-for-delivery order, I should have the option to "mark as delivered". This should make the order "completed"
+
+### Supporting Features -- Iterations 5+
+
+Your team needs to complete at least 2 of these. The instructors will work with you to identify which features we want to tackle in a later checkin.
+
+1. Where's My Order / Magic 8-ball
+
+You can't place a pickup order and expect it ready immediately. Predict the pickup time when an order is submitted:
+
+Each item in the store has a preparation time, defaulting to 12 minutes. Items can be edited to take longer.
+If an order has more than six items, add 10 minutes for every additional six items.
+Each already "paid" order in the system which is not "complete" delays the production start of this new order by 4 minutes.
+This information should be displayed to a user on their order page
+2. Deals! Deals! Deals!
+
+Store owners may put items or entire categories of items on sale. They can:
+
+Create a "sale" and connect it with individual items or entire categories
+Sales are created as a percentage off the normal price
+View a list of all active sales
+End a sale
+On the order "dashboard" they can:
+
+View details of an individual order, including:
+If purchased on sale, original price, sale percentage and adjusted price
+Subtotal for the order
+Discount for the order
+Total for the order reflecting any discounts from applicable sales
+As a browsing User:
+
+Sale prices are displayed in item listings alongside normal price and percentage savings
+3. What's Good Here?
+
+On any item I can, as an Unauthenticated User:
+
+See the posted reviews including:
+title, body, and a star rating 0-5
+the display name of the reviewer
+See an average of the ratings broken down to half-stars
+On items I've purchased, as an Authenticated User I can:
+
+Add a rating including:
+Star rating 0-5
+Title
+Body text
+4. The Machine Knows What You Like
+
+Implement simple recommendations including:
+
+The ability to easily see your last order and add the same items to the current order
+When browsing an item, recommend 3 other items from that store that were ordered by customers who also ordered the item I'm viewing
+If 3 other items can't be found, pull the most popular overall items from that store
+5. Where Is It?
+
+Implement full-text search for both the consumer and administrator:
+
+Consumer
+
+Search for items in the whole site
+Search through "My Orders" for matches in the item name or description
+Store Owner
+
+Search orders using a builder-style interface (like Google's "Advanced Search") allowing them to specify any of these:
+
+Status (drop-down)
+Order total (drop-down for >, <, = and a text field for dollar-with-cents)
+Order date (drop-down for >, <, = and a text field for a date)
+Email address of purchaser
+6. Transaction Processor
+
+Implement a "checkout" procedure using Stripe, Paypal or another service to handle credit card transactions in a "sandboxed" developer environment.
+
+You may need to add an additional "pending" order status to relect orders that are placed but not yet paid.
+
+When the card is processed, update the order to "paid" and send a confirmation email to the user. Emails should only be sent when the appis in production mode. Don't spam people while you're getting it working.
+
+7. Phone Updates
+
+As a customer, give me the option to add a contact number to my account. Whenever one of my orders changes its status, send me a text including information about the order and its current status.
+
+Additionally, include in the texts a contact number for the restaurant. If I text this number and include the ID for an order, I should receive info about that order including current status, items ordered, etc.
+
+Make sure, however, that I can only receive updates about my own orders.
+
+8. Theming / Custom CSS per Restaurant
+
+Provide a mechanism for store owners to customize the display of their site by:
+
+selecting from a few pre-built themes
+provde their own CSS that will be added to the page
+For the included themes, focus on the basics like font style and color scheme.
+
+## Evaluation Rubric
+
+Feature Delivery
+
+You'll be graded on each of the criteria below with a score of (1) well below expectations, (2) below expectations, (3) as expected, (4) better than expected.
+
+Completion: Did you complete all base features as well as 2 supporting features?
+Organization: did you use your project management tool to keep the project organized?
+Technical Quality
+
+Test-Driven Development: (1) disregard for testing, (2) gaps in test usage/coverage/design, (3) adequate testing, (4) exceptional use of testing
+Code Quality: (1) poor factoring and understanding of MVC, (2) some gaps in code quality / application of MVC, (3) solid code quality and pushing logic down the stack, (4) exceptionally well factored code
+User Experience: (1) inattention to the user experience, (2) some gaps in the UX, (3) UX is clear and makes it easy to navigate around the site (4) UX is especially polished and intuitive
