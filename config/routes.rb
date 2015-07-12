@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  resources :restaurants, only: [:index, :new, :create, :show, :edit, :update]
-  resources :items,       only: [:index, :show]
+ resources :restaurants, only: [:index, :new, :create, :show, :edit, :update] do
+   resources :items,       only: [:index, :show]
+ end
+
   resources :categories,  only: [:index, :show]
   resources :users,       only: [:new, :create, :show, :index ]
   resources :sessions,    only: [:new, :create, :destroy]
@@ -34,7 +36,7 @@ Rails.application.routes.draw do
     put '/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
 
-  get   'menu',              to: 'items#index'
+  get   '/menu',             to: 'items#index'
   match '/about_us',         to: 'pages#about_us',    via: 'get'
   match '/signup',           to: 'users#new',         via: 'get'
   match '/login',            to: 'sessions#new',      via: 'get'

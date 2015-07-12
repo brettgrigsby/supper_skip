@@ -3,6 +3,14 @@ FactoryGirl.define do
     title 'Ostrich'
     description 'That sweet, sweet ostrich meat.'
     price 32
+    restaurant
+  end
+
+  factory :item2 do
+    title 'Ostrich'
+    description 'That sweet, sweet ostrich meat.'
+    price 32
+    restaurant
   end
 
   # factory :category do

@@ -257,7 +257,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   database_cleaner
   eventmachine (~> 1.0.7)
-  factory_girl_rails
+  factory_girl_rails (~> 4.0)
   guard-rspec
   haml-rails
   jbuilder (~> 2.0)
