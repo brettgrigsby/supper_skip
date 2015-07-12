@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :restaurant do
     name          "The Dawg Pound"
     description   "Ruff"
-    slug          "ruff-ruff"
+    slug          "DawgyDawg"
   end
 end

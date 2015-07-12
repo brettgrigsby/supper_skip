@@ -1,5 +1,7 @@
 class Admin::ItemsController < AdminController
   before_action :find_item, only: [:edit, :update, :destroy, :show]
+  before_action :find_restaurant, only: [:edit, :update, :new, :create]
+  before_action :check_user, only: [:edit, :index]
 
   def index
     @items = Item.all
@@ -18,9 +20,9 @@ class Admin::ItemsController < AdminController
 
   def create
     @item = Item.new(item_params)
-
+    @item.restaurant = @restaurant
     if @item.save
-      redirect_to admin_item_path(@item)
+      redirect_to admin_restaurant_path(@restaurant)
     else
       render :new
     end
@@ -28,7 +30,7 @@ class Admin::ItemsController < AdminController
 
   def update
     @item.update(item_params)
-    redirect_to admin_item_path(@item)
+    redirect_to admin_restaurant_path(@restaurant)
   end
 
   def destroy
@@ -60,9 +62,16 @@ class Admin::ItemsController < AdminController
     @item = Item.find(params[:id])
   end
 
+  def find_restaurant
+    @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
+  end
+
   def extinction
     item = Item.find(params[:id])
     Item.extinction(item)
     redirect_to admin_item_path(item)
   end
+
+  private
+
 end
