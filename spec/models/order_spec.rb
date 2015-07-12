@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Order, :type => :model do
 
-  let(:order) { create :order }
-  let(:item) { create :item}
+  let(:order) { Order.create!(delivery: true) }
+  let(:restaurant) { Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug') }
+  let(:item) { restaurant.items.create!(title: 'myitem', description: 'a item', price: 5 ) }
+  let(:item2) { restaurant.items.create!(title: 'myitem2', description: 'a 2nd item', price: 5 ) }
 
   let(:address) do
     Address.new(order_id: 1, street_1: "123 Washington St", city: "Denver", state: "CO", zip: "80202")
@@ -41,14 +43,12 @@ RSpec.describe Order, :type => :model do
   end
 
   it 'has many items' do
-    item_1 = create :item, title: "Item1"
-    item_2 = create :item, title: "Item2"
 
-    item_1.orders << order
-    item_2.orders << order
+    item.orders << order
+    item2.orders << order
 
-    assert item_1.orders.include?(order)
-    assert item_2.orders.include?(order)
+    assert item.orders.include?(order)
+    assert item2.orders.include?(order)
   end
 
   it 'adds item to order' do
