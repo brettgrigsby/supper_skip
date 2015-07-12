@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   resources :addresses
 
   namespace :admin do
+    resources :restaurants, only: [:show, :edit, :update, :destroy] do
+      resources :items, only: [:edit, :update, :destroy]
+      resources :categories, only: [:create, :edit, :update]
+      resources :orders, only: [:edit, :update]
+    end
     resources :items do
       member do
         put    :add_category
