@@ -3,13 +3,24 @@ require_relative '../feature_spec_helper'
 describe 'the admin dashboard', type: :feature do
   include AdminHelper
 
-  before { login_as_admin }
+  before do
+    user = User.create!(first_name: "Brett", 
+		last_name: "Grigsby", 
+		email: "email@mail.com", 
+		password: "password", 
+		role: "admin")
+    @restaurant = user.restaurants.create!(name: "some", description: "thing", slug: "something")
+    visit "/"
+    first(:link, "Login").click
+
+    fill_in("email address", :with => "email@mail.com")
+    fill_in("password", :with => "password")
+    click_button("Login")
+  end
   
-  it 'has links' do
+  it 'has links to users restaurants' do
+    
     visit '/admin_dashboard'
-    expect(page).to have_link "View Menu Items", href: admin_items_path
-    expect(page).to have_link "View Orders", href: admin_orders_path
-    expect(page).to have_link "Create New Item", href: new_admin_item_path
-    expect(page).to have_link "Create New Category", href: new_admin_category_path
+    expect(page).to have_link "some", href: admin_restaurant_path(@restaurant)
   end
 end
