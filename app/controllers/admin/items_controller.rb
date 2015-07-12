@@ -1,7 +1,7 @@
 class Admin::ItemsController < AdminController
   before_action :find_item, only: [:edit, :update, :destroy, :show]
-  before_action :find_restaurant, only: [:edit, :update]
-  before_action :check_user, only: [:edit]
+  before_action :find_restaurant, only: [:edit, :update, :new, :create]
+  before_action :check_user, only: [:edit, :index]
 
   def index
     @items = Item.all
@@ -20,9 +20,10 @@ class Admin::ItemsController < AdminController
 
   def create
     @item = Item.new(item_params)
-
+    @item.restaurant = @restaurant
+    binding.pry
     if @item.save
-      redirect_to admin_item_path(@item)
+      redirect_to admin_restaurant_path(@restaurant)
     else
       render :new
     end
@@ -74,9 +75,4 @@ class Admin::ItemsController < AdminController
 
   private
 
-  def check_user
-    unless current_user.restaurants.include?(@restaurant)
-      render :file => 'public/404.html', :status => :not_found
-    end
-  end
 end

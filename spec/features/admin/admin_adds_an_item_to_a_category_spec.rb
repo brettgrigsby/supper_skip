@@ -9,6 +9,7 @@ describe 'admin', type: :feature do
     item = Item.create(title: "hi", description: "mom", price: 10)
     category = Category.create(name: "Dinner")
     item.categories.create(name: "Lunch")
+    binding.pry
 
     visit '/admin_dashboard'
     click_link 'View Menu Items'
