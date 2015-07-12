@@ -57,6 +57,7 @@
 * Customer order status should update as it changes.
 
 Status suggestions:
+Basket
 Paid
 Ready for Preparation
 Cancelled
