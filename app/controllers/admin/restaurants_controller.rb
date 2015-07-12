@@ -1,5 +1,6 @@
 class Admin::RestaurantsController < AdminController
   before_action :load_restaurant, only: [:show]
+  before_action :check_user, only: [:show]
 
   def show
   end

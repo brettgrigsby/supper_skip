@@ -21,3 +21,12 @@
       = f.file_field :image
     %p
       = f.submit
+
+%h2 Categories:
+-@item.categories.each do |category|
+  %h2= category.name
+  %h4= link_to "Remove Category", admin_categorization_path(@item.categorizations.find_by(category_id: category.id)), method: :delete
+
+%h2 Add to Category:
+-(@restaurant.categories - @item.categories).each do |category|
+  %h2= link_to category.name, admin_categorizations_path(item: @item, category: category), method: :post
