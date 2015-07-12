@@ -26,10 +26,10 @@ RSpec.describe Restaurant, :type => :model do
   it 'has many items' do
     restaurant = create :restaurant
 
-    item1 = restaurant.create_item(title: "Item1")
-    item2 = restaurant.create_item(title: "Item2")
+    item1 = restaurant.items.create!(title: "Item1", description: "desc1", price: 5.95)
+    item2 = restaurant.items.create!(title: "Item2", description: "desc2", price: 9.99)
 
-    assert restaurant.include?(item1)
-    assert restaurant.include?(item2)
+    assert restaurant.items.include?(item1)
+    assert restaurant.items.include?(item2)
   end
 end
