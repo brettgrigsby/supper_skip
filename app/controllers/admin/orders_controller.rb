@@ -21,12 +21,12 @@ class Admin::OrdersController < AdminController
   end
 
   def run_event
-    user_order = Order.find(params[:id])
-    if user_order.aasm.may_fire_event? params[:event].to_sym # <-- to_sym exposes gc hack :/
-      user_order.public_send "#{params[:event]}!" # <--  dynamic method invocation *sigh* fkn metaprogramming, y'all
-     # user_order.public_method("#{params[:event]}!").call#.call('some_argument_1', 'some_argument_2')
-    end
-    redirect_to admin_restaurant_orders_path(@restaurant, scope: user_order.aasm_state)
+    # user_order = Order.find(params[:id])
+    # if user_order.aasm.may_fire_event? params[:event].to_sym # <-- to_sym exposes gc hack :/
+    #   user_order.public_send "#{params[:event]}!" # <--  dynamic method invocation *sigh* fkn metaprogramming, y'all
+    #  # user_order.public_method("#{params[:event]}!").call#.call('some_argument_1', 'some_argument_2')
+    # end
+    # redirect_to admin_restaurant_orders_path(@restaurant, scope: user_order.aasm_state)
   end
 
   def delete_item
@@ -41,7 +41,11 @@ class Admin::OrdersController < AdminController
   end
   private
 
-  def known_scopes
-    @known_scopes ||= Order.aasm.states.map { |state| state.name.to_s }
+  def order_params
+    params.require(:order).permit(:workflow_state)
   end
+
+  # def known_scopes
+  #   @known_scopes ||= Order.aasm.states.map { |state| state.name.to_s }
+  # end
 end

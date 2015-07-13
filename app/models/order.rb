@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
-  include AASM
+  #  include AASM
+  include Workflow
 
   belongs_to :user
   has_many :order_items
@@ -8,29 +9,56 @@ class Order < ActiveRecord::Base
   belongs_to :address
   validates :delivery, inclusion: { in: [true, false] }
 
-  aasm do
-    state :basket, :initial => true
-    state :ordered
-    state :paid
-    state :completed
+  workflow do
+    state :paid do
+      event :payment_confirmed, :transitions_to => :ready_for_preparation
+      event :order_cancelled, :transitions_to => :cancelled
+    end
+
+    state :ready_for_preparation do
+      event :in_queue, :transitions_to => :in_preparation
+      event :order_cancelled, :transitions_to => :cancelled
+    end
+
+    state :in_preparation do
+      event :order_processed, :transitions_to => :ready_for_delivery
+    end
+
+    state :ready_for_delivery do
+      event :order_enroute, :transitions_to => :out_for_delivery
+    end
+
+    state :out_for_delivery do
+      event :order_received, :transitions_to => :delivered
+    end
     state :cancelled
-
-    event :order do
-      transitions :from => :basket, :to => :ordered
-    end
-
-    event :pay do
-      transitions :from => :ordered, :to => :paid, before_enter: :erase_current_order
-    end
-
-    event :complete do
-      transitions :from => :paid, :to => :completed
-    end
-
-    event :cancel do
-      transitions :from => [:basket, :ordered, :paid], :to => :cancelled
-    end
+    state :delivered
   end
+
+
+  # aasm do
+  #   state :basket, :initial => true
+  #   state :ordered
+  #   state :paid
+  #   state :completed
+  #   state :cancelled
+  #
+  #   event :order do
+  #     transitions :from => :basket, :to => :ordered
+  #   end
+  #
+  #   event :pay do
+  #     transitions :from => :ordered, :to => :paid, before_enter: :erase_current_order
+  #   end
+  #
+  #   event :complete do
+  #     transitions :from => :paid, :to => :completed
+  #   end
+  #
+  #   event :cancel do
+  #     transitions :from => [:basket, :ordered, :paid], :to => :cancelled
+  #   end
+  # end
 
   def pay_in_store?
     ccn == nil && expdate == nil
