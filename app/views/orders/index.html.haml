@@ -1,0 +1,9 @@
+%h1= 'Order Index Page'
+%br
+%br
+
+-@orders.each do |order|
+  %h1= restaurant.name
+  %h3= restaurant.description
+  %br
+  =render partial: 'layouts/shared/marketing_containers'

@@ -2,5 +2,7 @@
 - @restaurant.categories.each do |category|
   %h3= link_to category.name, category
 - @restaurant.items.each do |item|
-  %h4= link_to item.title, item
+  %h4= link_to item.title, restaurant_item_path(@restaurant, item)
   %h5= link_to "edit item", edit_admin_restaurant_item_path(@restaurant, item)
+%h2= link_to "Add Item", new_admin_restaurant_item_path(@restaurant)
+%h2= link_to "Add Category", new_admin_restaurant_category_path(@restaurant)

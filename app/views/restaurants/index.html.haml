@@ -6,7 +6,7 @@
 
 
 -@restaurants.each do |restaurant|
-  %h1= restaurant.name
+  %h1= link_to restaurant.name, restaurant_path(restaurant)
   %h3= restaurant.description
   %br
-  =render partial: 'layouts/shared/marketing_containers'
+-#  =render partial: 'layouts/shared/marketing_containers'

@@ -1,5 +1,5 @@
 .container
-  = form_for [:admin, @category] do |f|
+  = form_for [:admin, @restaurant, @category] do |f|
     %ul
       - @category.errors.full_messages.each do |error|
         %li= error

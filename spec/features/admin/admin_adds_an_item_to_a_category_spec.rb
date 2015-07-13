@@ -2,21 +2,36 @@ require_relative '../feature_spec_helper'
 
 describe 'admin', type: :feature do
   include AdminHelper
+  before do
+    @user = User.create!(	first_name: "Brett", 
+				last_name: "Grigsby", 
+				email: "brett@mail.com", 
+				password: "password", 
+				role: "admin")
+    @restaurant = @user.restaurants.create!(	name: 'testRest', 
+						description: 'passing or not', 
+						slug: 'slug')
+    @item = @restaurant.items.create!(title: 'myitem', description: 'a item', price: 5 )
+    visit "/"
+    first(:link, "Login").click
 
-  before { login_as_admin }
-  
+    fill_in("email address", :with => "brett@mail.com")
+    fill_in("password", :with => "password")
+    click_button("Login")
+  end
+ 
   it 'adds a category to an item' do
-    item = Item.create(title: "hi", description: "mom", price: 10)
-    category = Category.create(name: "Dinner")
-    item.categories.create(name: "Lunch")
+    category = @restaurant.categories.create(name: "Dinner")
+    @item.categories.create(name: "Lunch", restaurant_id: @restaurant.id)
 
     visit '/admin_dashboard'
-    click_link 'View Menu Items'
-    click_on item.title
+    click_link 'testRest'
+    click_on 'edit item'
 
-    expect(page).not_to have_css ".categories-container", text: "Dinner"
     click_link 'Dinner'
-    expect(current_url).to eq "http://www.example.com/admin/items/1"
-    expect(page).to have_css ".categories-container", text: "Dinner"
+
+    item = Item.last
+
+    expect(item.categories).to include(category)
   end
 end
