@@ -21,10 +21,10 @@
             %tbody
             -order.order_items.each do |order_item|
               %tr.order-items
-                %td= link_to order_item.item.title, item_path(order_item.item)
-                %td= link_to order_item.item.description, item_path(order_item.item)
-                %td= link_to "$#{order_item.item.price_for_humans}", item_path(order_item.item)
-                %td= link_to order_item.quantity, item_path(order_item.item)
+                %td= link_to order_item.item.title, restaurant_item_path(@restaurant, order_item.item)
+                %td= link_to order_item.item.description, restaurant_item_path(@restaurant, order_item.item)
+                %td= link_to "$#{order_item.item.price_for_humans}", restaurant_item_path(@restaurant, order_item.item)
+                %td= link_to order_item.quantity, restaurant_item_path(@restaurant, order_item.item)
                 %td= link_to "$#{quantity_price_for_humans(order_item.item, order)}"
           %h4.pull-right
             = link_to "View Order", admin_order_path(order), :role => "button", :class => "btn btn-primary"

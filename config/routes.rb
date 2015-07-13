@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :restaurants, only: [:show, :edit, :update, :destroy] do
       resources :items, only: [:edit, :update, :destroy, :new, :create]
       resources :categories, only: [:new, :create, :edit, :update]
-      resources :orders, only: [:edit, :update]
+      resources :orders, only: [:index, :edit, :update, :destroy]
     end
     resources :categorizations, only: [:create, :destroy]
     resources :items do
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   get   '/confirm',          to: 'orders#confirm'
   match '/admin_dashboard',  to: 'admin#dashboard',   via: 'get'
   get   '/code',             to: 'pages#code'
-  delete '/admin/:id/orders', to: 'admin/orders#delete_item', as: "admin_delete_order_item"
+#  delete '/admin/:id/orders', to: 'admin/orders#delete_item', as: "admin_delete_order_item"
   put   '/admin/order_items/:id', to: 'admin/order_items#update'
   match "*a",                to: 'errors#routing_error', via: 'get'
 
