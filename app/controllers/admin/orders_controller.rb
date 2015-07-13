@@ -2,10 +2,11 @@ class Admin::OrdersController < AdminController
   before_action :find_restaurant, only: [:index, :edit, :update, :new, :create]
 
   def index
+    @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
     filter = known_scopes.find(-> { :all }) { |scope_name| scope_name == params[:scope] }
     @orders = Order.public_send filter
-    ## think restaurant_id needs to be in here
-   # @orders = Order.select { |orders| orders.restaurant_id == @restaurant.id }
+   # @orders = @restaurant.orders.public_send filter
+    @orders = Order.find_by(restaurant_id: @restaurant.id)
   end
 
   def show

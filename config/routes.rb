@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     end
     resources :categories
     resources :orders, only: [:index, :show, :edit, :update]
-    put '/orders/:id/run_event', to: 'orders#run_event', as: :order_event
+    put '/restaurant/:restaurant_id/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
 
   get   '/menu',             to: 'items#index'
