@@ -64,6 +64,5 @@ describe 'a new restaurant', type: :feature do
     expect(current_path).to eq('/restaurants/dawgs-r-cool')
     admin = User.find_by(email: "jane@jane.com")
     expect(admin.role).to eq('admin')
-
   end
 end

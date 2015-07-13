@@ -7,6 +7,8 @@
   .col-sm-6.col-md-4
   %br
 
+= link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
+
 - if current_user.restaurants
   %h2 Your Restaurant(s)
   - current_user.restaurants.each do |restaurant|
