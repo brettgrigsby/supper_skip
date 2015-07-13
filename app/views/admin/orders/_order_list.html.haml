@@ -21,18 +21,18 @@
             %tbody
             -order.order_items.each do |order_item|
               %tr.order-items
-                %td= link_to order_item.item.title, restaurant_item_path(@restaurant, order_item.item)
-                %td= link_to order_item.item.description, restaurant_item_path(@restaurant, order_item.item)
-                %td= link_to "$#{order_item.item.price_for_humans}", restaurant_item_path(@restaurant, order_item.item)
-                %td= link_to order_item.quantity, restaurant_item_path(@restaurant, order_item.item)
+                %td= link_to order_item.item.title, item_path(order_item.item)
+                %td= link_to order_item.item.description, item_path(order_item.item)
+                %td= link_to "$#{order_item.item.price_for_humans}", item_path(order_item.item)
+                %td= link_to order_item.quantity, item_path(order_item.item)
                 %td= link_to "$#{quantity_price_for_humans(order_item.item, order)}"
           %h4.pull-right
-            = link_to "View Order", admin_restaurant_order_path(@restaurant, order), :role => "button", :class => "btn btn-primary"
+            = link_to "View Order", admin_order_path(order), :role => "button", :class => "btn btn-primary"
             ="Total: $#{order.total_price_for_humans}"
           %h4.pull-left
             - if order.may_pay?
-              = link_to "Mark as Paid",      admin_order_event_path(@restaurant.id, order, event: 'pay'),      method: "put", :role => "button", :class => "btn btn-success"
+              = link_to "Mark as Paid",      admin_order_event_path(order, event: 'pay'),      method: "put", :role => "button", :class => "btn btn-success"
             - if order.may_complete?
-              = link_to "Mark as Completed", admin_order_event_path(@restaurant, order, event: 'complete'), method: "put", :role => "button", :class => "btn btn-success"
+              = link_to "Mark as Completed", admin_order_event_path(order, event: 'complete'), method: "put", :role => "button", :class => "btn btn-success"
             - if order.may_cancel?
-              = link_to "Cancel Order",      admin_order_event_path(@restaurant, order, event: 'cancel'),   method: "put", :role => "button", :class => "btn btn-danger"
+              = link_to "Cancel Order",      admin_order_event_path(order, event: 'cancel'),   method: "put", :role => "button", :class => "btn btn-danger"
