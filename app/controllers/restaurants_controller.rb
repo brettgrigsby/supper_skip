@@ -25,7 +25,11 @@ class RestaurantsController < ApplicationController
   end
 
   def new
-    @restaurant = Restaurant.new
+    if current_user
+      @restaurant = Restaurant.new
+    else
+      redirect_to login_path
+    end
   end
 
   def create

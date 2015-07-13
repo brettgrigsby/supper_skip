@@ -1,8 +1,9 @@
 
 -#- if signed_in?
 %br
-  = link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
-  %br
+= link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
+%br
+
 
 -@restaurants.each do |restaurant|
   %h1= restaurant.name
