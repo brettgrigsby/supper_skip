@@ -6,7 +6,7 @@ class Admin::OrdersController < AdminController
     filter = known_scopes.find(-> { :all }) { |scope_name| scope_name == params[:scope] }
     @orders = Order.public_send filter
    # @orders = @restaurant.orders.public_send filter
-    @orders = Order.find_by(restaurant_id: @restaurant.id)
+   # @orders = Order.find_by(restaurant_id: @restaurant.id)
   end
 
   def show
