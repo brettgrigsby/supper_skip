@@ -1,0 +1,51 @@
+.container
+  .panel.panel-default
+    %h1.panel-heading Your Order
+    .panel-body
+      %p Look over your items, add a few more, or proceed to checkout.
+      = flash[:toomany]
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Title
+            %th Description
+            %th Price
+            %th Quantity
+            %th Item Subtotal
+        %tbody
+        -if @cart.items.empty?
+          %tr You don't have any items in your cart!
+        -else
+          -@cart.items.each do |item|
+            %tr
+              %td #{item.first.title}
+              %td #{item.first.description}
+              %td $#{item.first.price_for_humans}
+              %td
+                = form_tag '/cart', method: :put do
+                  .field
+                    = text_field_tag :quantity, item.last
+                    = hidden_field_tag :item_id, item.first.id
+                    = submit_tag "Update", class: "btn btn-primary"
+              %td #{number_to_currency((item.first.price * item.last).to_f / 100)}
+    #order-total
+      %h3.text-muted.pull-right= "Order Subtotal: $#{@cart.total_price}"
+ 
+-if signed_in?
+  -unless order.total == 0|| order.empty?
+    .container
+      .row.pull-right
+        %ul.nav.nav-pills
+          %li.active
+            = link_to "Proceed to Checkout", checkout_path
+-else
+  .container
+    .col-lg-5-offset-3.pull-right
+      %h5.alert.alert-warning You'll need to log in or sign up to complete your order.
+  .container
+    .col-lg-5-offset-3.pull-right
+      %ul.nav.nav-pills
+        %li.active
+          %a{href: login_path} Login
+        %li.active
+          %a{href: signup_path} Signup

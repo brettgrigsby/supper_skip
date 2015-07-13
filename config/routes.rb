@@ -36,6 +36,11 @@ Rails.application.routes.draw do
     put '/restaurant/:restaurant_id/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
 
+  post '/cart', to: 'cart_items#create'
+  get '/cart', to: 'cart_items#index'
+  put '/cart', to: 'cart_items#update'
+
+
   get   '/menu',             to: 'items#index'
   match '/about_us',         to: 'pages#about_us',    via: 'get'
   match '/signup',           to: 'users#new',         via: 'get'
