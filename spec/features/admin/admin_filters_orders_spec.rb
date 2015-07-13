@@ -5,17 +5,26 @@ describe "an admin filters orders by state" do
 
   before do
     login_as_admin
-    @restaurant = Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug')
-    @basket_order = create :order, aasm_state: "basket"
-    @ordered_order = create :order, aasm_state: "ordered"
-    @paid_order = create :order, aasm_state: "paid"
-    @completed_order = create :order, aasm_state: "completed"
-    @cancelled_order = create :order, aasm_state: "cancelled"
+    @restaurant = Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug me')
+
+    @paid_order = create :order, workflow_state: :paid
+    @ready_for_preparation_order = create :order, workflow_state: :ready_for_preparation
+    @in_preparation_order = create :order, workflow_state: :in_preparation
+    @ready_for_delivery_order = create :order, workflow_state: :ready_for_delivery
+    @out_for_delivery_order = create :order, workflow_state: :out_for_delivery
+    @cancelled_order = create :order, workflow_state: :cancelled
+    @delivered_order = create :order, workflow_state: :delivered
     @all_orders = @restaurant.orders
   end
 
   def all_orders
-    [@basket_order, @ordered_order, @paid_order, @completed_order, @cancelled_order]
+    [@paid_order,
+     @ready_for_preparation_order,
+     @in_preparation_order,
+     @ready_for_delivery_order,
+     @out_for_delivery_order,
+     @delivered_order,
+     @cancelled_order]
   end
 
   it "sees all orders" do

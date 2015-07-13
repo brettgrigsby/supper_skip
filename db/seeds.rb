@@ -40,12 +40,20 @@ Item.all.each do |item|
   item.save
 end
 
-order_states = ['basket', 'ordered', 'paid', 'cancelled', 'completed']
+  def all_order_states
+    [:paid_order,
+     :ready_for_preparation_order,
+     :in_preparation_order,
+     :ready_for_delivery_order,
+     :out_for_delivery_order,
+     :delivered_order,
+     :cancelled_order]
+  end
 
 1.upto(50) do |order|
   Order.create!({ delivery: true,
                   user_id: rand(1..User.all.size),
-                  aasm_state: "#{order_states.sample}",
+                  workflow_state: "#{all_order_states.sample}",
                   ccn: nil,
                   expdate: nil,
                   card_name: nil})

@@ -3,6 +3,8 @@ class Admin::OrdersController < AdminController
 
   def index
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
+
+
     filter = known_scopes.find(-> { :all }) { |scope_name| scope_name == params[:scope] }
     @orders = Order.public_send filter
    # @orders = @restaurant.orders.public_send filter
