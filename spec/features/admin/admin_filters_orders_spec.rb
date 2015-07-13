@@ -3,14 +3,15 @@ require_relative '../feature_spec_helper'
 describe "an admin filters orders by state" do
   include AdminHelper
 
-  before do 
+  before do
     login_as_admin
-
+    @restaurant = Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug')
     @basket_order = create :order, aasm_state: "basket"
     @ordered_order = create :order, aasm_state: "ordered"
     @paid_order = create :order, aasm_state: "paid"
     @completed_order = create :order, aasm_state: "completed"
     @cancelled_order = create :order, aasm_state: "cancelled"
+    @all_orders = @restaurant.orders
   end
 
   def all_orders
@@ -18,7 +19,7 @@ describe "an admin filters orders by state" do
   end
 
   it "sees all orders" do
-    visit admin_orders_path
+    visit admin_restaurant_orders_path(@restaurant)
 
     within ".order-display" do
       all_orders.each do |order|
@@ -28,7 +29,7 @@ describe "an admin filters orders by state" do
   end
 
   it "filters by basket" do
-    visit admin_orders_path
+    visit admin_restaurant_orders_path(@restaurant)
 
     within ".order-filters" do
       click_on "Basket"
@@ -42,7 +43,7 @@ describe "an admin filters orders by state" do
 
   # Don't forget to refute other content exists
   it "filters by ordered" do
-    visit admin_orders_path
+    visit admin_restaurant_orders_path(@restaurant)
 
     within ".order-filters" do
       click_on "Ordered"
@@ -55,7 +56,7 @@ describe "an admin filters orders by state" do
   end
 
   it "filters by paid" do
-    visit admin_orders_path
+    visit admin_restaurant_orders_path(@restaurant)
 
     within ".order-filters" do
       click_on "Paid"
@@ -68,7 +69,7 @@ describe "an admin filters orders by state" do
   end
 
   it "filters by complete" do
-    visit admin_orders_path
+    visit admin_restaurant_orders_path(@restaurant)
 
     within ".order-filters" do
       click_on "Complete"
@@ -81,7 +82,7 @@ describe "an admin filters orders by state" do
   end
 
   it "filters by cancelled" do
-    visit admin_orders_path
+    visit admin_restaurant_orders_path(@restaurant)
 
     within ".order-filters" do
       click_on "Cancelled"
