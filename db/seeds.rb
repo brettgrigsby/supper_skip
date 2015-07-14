@@ -2,20 +2,20 @@ user_role = Role.create!(title: "user")
 admin_role = Role.create!(title: "admin")
 
 User.create!([
-  {first_name: "Rachel", last_name: "Warbelow", email: "demo+rachel@jumpstartlab.com", username: nil, password: "password", role: "user"},
-  {first_name: "Josh", last_name: "Cheek", email: "demo+josh@jumpstartlab.com", username: "josh", password: "password", role: "admin"},
-  {first_name: "jeff", last_name: "", email: "demo+jeff@jumpstartlab.com", username: nil, password: "password", role: nil},
-  {first_name: "user", last_name: "", email: "user@email.com", username: nil, password: "password", role: nil},
-  {first_name: "admin", last_name: "", email: "admin@email.com", username: nil, password: "password", role: "admin"},
-  {first_name: "user5", last_name: "", email: "user5@email.com", username: nil, password: "password", role: "admin"},
-  {first_name: "user2", last_name: "", email: "user2@email.com", username: nil, password: "password", role: "admin"},
-  {first_name: "user3", last_name: "", email: "user3@email.com", username: nil, password: "password", role: "user"},
-  {first_name: "user4", last_name: "", email: "user4@email.com", username: nil, password: "password", role: "user"},
-  {first_name: "Jorge", last_name: "Tellez", email: "demo+jorge@jumpstartlab.com", username: "novohispano", password: "password", role: "user"}
+  {first_name: "Rachel", last_name: "Warbelow", email: "demo+rachel@jumpstartlab.com", username: nil, password: "password"},
+  {first_name: "Jorge", last_name: "Tellez", email: "demo+jorge@jumpstartlab.com", username: "novohispano", password: "password"},
+  {first_name: "jeff", last_name: "", email: "demo+jeff@jumpstartlab.com", username: nil, password: "password"},
+  {first_name: "user", last_name: "", email: "user@email.com", username: nil, password: "password"},
+  {first_name: "admin", last_name: "", email: "admin@email.com", username: nil, password: "password"},
+  {first_name: "user5", last_name: "", email: "user5@email.com", username: nil, password: "password"},
+  {first_name: "user2", last_name: "", email: "user2@email.com", username: nil, password: "password"},
+  {first_name: "user3", last_name: "", email: "user3@email.com", username: nil, password: "password"},
+  {first_name: "user4", last_name: "", email: "user4@email.com", username: nil, password: "password"},
+  {first_name: "Josh", last_name: "Cheek", email: "demo+josh@jumpstartlab.com", username: "josh", password: "password"}
 ])
 
 
-User.each do |user|
+User.all.each do |user|
   if user.id < 7 
     user.roles << user_role
   else
