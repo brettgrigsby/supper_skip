@@ -7,14 +7,7 @@ Rails.application.routes.draw do
   resources :users,       only: [:new, :create, :show, :index ]
   resources :sessions,    only: [:new, :create, :destroy]
   resources :order_items, only: [:update]
-  resources :addresses,   only: [:create]
-  resources :orders,      except: [:new] do
-    member do
-      post :add_item
-      post :delete_item
-    end
-  end
-
+  resources :orders,      only: [:new, :create]
   resources :addresses
 
   namespace :admin do
@@ -35,6 +28,11 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show, :edit, :update]
     put '/restaurant/:restaurant_id/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
+
+  post '/cart', to: 'cart_items#create'
+  get '/cart', to: 'cart_items#index'
+  put '/cart', to: 'cart_items#update'
+
 
   get   '/menu',             to: 'items#index'
   match '/about_us',         to: 'pages#about_us',    via: 'get'

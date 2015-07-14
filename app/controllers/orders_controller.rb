@@ -3,10 +3,25 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
+  def new
+  end
+
   def show
   end
 
   def edit
+  end
+
+  def create
+    @cart.sort_orders.each do |restaurant_id, order_items|
+      order = Order.create!(user: current_user, restaurant_id: restaurant_id)
+      order_items.each do |item, quantity|
+        order.order_items.create(item_id: item.id, quantity: quantity)
+      end
+    end
+    @cart.clear
+    session[:cart] = @cart.contents
+    redirect_to current_user
   end
 
   def add_item

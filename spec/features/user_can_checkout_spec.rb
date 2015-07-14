@@ -3,11 +3,7 @@ require_relative 'feature_spec_helper'
 describe "A user who is not logged in" do
 
   it "cannot access the checkout page" do
-    order = create :order
-    item = create :item
-    order.items << item
-
-    visit order_path(order)
+    visit cart_path
     expect(page).to_not have_content('Proceed to Checkout')
   end
 
@@ -17,35 +13,32 @@ describe 'A user who is logged in' do
   include AdminHelper
 
   before do
-    @user  = create :user
-    @order = create :order
-    @item  = create :item
-    @user.orders << @order
-    @order.items << @item
-    allow_any_instance_of(ApplicationController)
-      .to receive(:order) { @order }
-
-    log_me_in!
-    visit order_path(@order)
+    User.create(first_name: "Joe",
+		last_name: "Johnson",
+		email: "joe@johnson.com",
+		password: "password",
+		role: "user")
+    restaurant = Restaurant.create!(name: "testRest", description: "yoyo", slug: "slug")
+    item = restaurant.items.create!(	title: "thing",
+					description: "thingy",
+					price: 400)
+    visit login_path
+    fill_in("email address", with: "joe@johnson.com")
+    fill_in("password", with: "password")
+    click_button "Login"
+    visit restaurant_item_path(restaurant, item)
+    click_on "Add to Cart"
+    visit cart_path
   end
 
   it 'can access the checkout page' do
     click_on('Proceed to Checkout')
-    expect(page).to have_content("You're checking out!")
+    expect(current_path).to eq(new_order_path)
+    expect(page).to have_content("testRest")
   end
 
   it 'can get to confirmation screen'  do
     click_on('Proceed to Checkout')
-    click_on('Continue to Confirmation Screen')
-    expect(page).to have_content('Confirm Order')
-  end
-
-  it 'can add payment info' do
-    click_on('Proceed to Checkout')
-    fill_in 'order[ccn]', with: '1234567812345678'
-    fill_in 'order[expdate]', with: '12-12'
-    fill_in 'order[card_name]', with: 'Allison Larson'
-    click_on('Continue to Confirmation Screen')
-    expect(page).to have_content('Confirm Order')
+    expect(page).to have_button('Confirm Checkout')
   end
 end

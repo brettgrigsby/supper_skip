@@ -5,4 +5,4 @@
     %p.menu-item-description=@item.description
     %p $ #{@item.price_for_humans}
     -unless @item.extinct?
-      = button_to "Add to Cart", add_item_order_path(order, item_id: @item.id), class: "#{@item.title} btn btn-primary"
+      = button_to "Add to Cart", cart_path(item_id: @item.id), class: "#{@item.title} btn btn-primary"
