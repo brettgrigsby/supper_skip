@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
             }
 
   has_many :orders
-
+  has_many :user_roles
+  has_many :roles, through: :user_roles
   has_many :restaurants
 
   def full_name
