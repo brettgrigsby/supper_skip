@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Role, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'responds with a collection of its users' do
+    role = Role.new(title: "user")
+
+    expect(role).to respond_to(:users)
+  end
 end
