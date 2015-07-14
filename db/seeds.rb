@@ -24,7 +24,7 @@ User.all.each do |user|
 end
 
 
-admin_ids = User.where(role: "admin").pluck(:id)
+admin_ids = admin_role.users.pluck(:id)
 
 1.upto(10) do |v|
   Restaurant.create! ({ name: "Endangered Eats#{v}",
