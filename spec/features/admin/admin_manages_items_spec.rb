@@ -1,14 +1,25 @@
+require_relative '../feature_spec_helper'
+
 describe 'a restaurant owner', type: :feature do
-  let(:user) { User.create(first_name: "Jane",
-                last_name: "Doe",
-                email: "jane@jane.com",
-                password: "password",
-                role: "admin") }
+    let(:user) { User.create!(first_name: "Janey",
+                        last_name: "Doey",
+                        email: "jane@jane.com",
+                        password: "password",
+                        role: "admin") }
   before do
-    user.restaurants.create!(name: "Restaurant", description: "restaurant description", slug: "rest")
-    user.restaurants.first.items.create(title: "Thing", 
-					description: "item description",
-					price: 200)					
+    # user = User.create!(first_name: "Janey",
+    #                     last_name: "Doey",
+    #                     email: "jane@jane.com",
+    #                     password: "password",
+    #                     role: "admin")
+
+    user.restaurants.create!(name: "Restaurant",
+                              description: "restaurant description",
+                              slug: "rest")
+
+    user.restaurants.first.items.create(title: "Thing",
+		                                		 description: "item description",
+				                                 price: 200)
     visit "/"
     first(:link, "Login").click
 
@@ -21,7 +32,7 @@ describe 'a restaurant owner', type: :feature do
     restaurant = user.restaurants.last
     item = restaurant.items.last
     visit admin_restaurant_path(restaurant)
-    
+
     expect(page).to have_content(restaurant.name)
     expect(page).to have_content("Thing")
     click_link("edit item")

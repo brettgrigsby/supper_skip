@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Order, :type => :model do
 
-  let(:order) { Order.create!(delivery: true) }
   let(:restaurant) { Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug') }
+  let(:order) { Order.create!(delivery: true) }
   let(:item) { restaurant.items.create!(title: 'myitem', description: 'a item', price: 5 ) }
   let(:item2) { restaurant.items.create!(title: 'myitem2', description: 'a 2nd item', price: 5 ) }
 
@@ -21,24 +21,12 @@ RSpec.describe Order, :type => :model do
     expect(order).to be_valid
   end
 
-  it 'is valid if delivery is false' do
-    order.delivery = false
-    expect(order).to be_valid
-  end
-
   it 'is valid with delivery designated as false' do
-    order.delivery = false
+    refute(order.delivered?)
     expect(order).to be_valid
-  end
-
-  it 'has address if delivery is true' do
-    # address = Address.find_by_order_id(order.id)
-    expect(order.delivery).to eq(true)
-    expect(address.order_id).to eq(order.id)
   end
 
   it 'has many items' do
-
     item.orders << order
     item2.orders << order
 
@@ -64,8 +52,8 @@ RSpec.describe Order, :type => :model do
   end
 
   it 'tells arrival time on payment' do
-    order.order
-    order.pay
+    order.paid?
+    order.payment_received!
     assert_equal (order.updated_at + 45.minutes).strftime('%l:%M %p'), order.arrival_time
   end
 
