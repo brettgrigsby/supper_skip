@@ -65,4 +65,8 @@ class ApplicationController < ActionController::Base
   def admin_role
     Role.find_by(title: "admin")
   end
+
+  def user_role
+    Role.find_by(title: "user")
+  end
 end

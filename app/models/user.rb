@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
     orders.where(status: "basket")
   end
 
+  def admin?
+    roles.pluck(:title).include?("admin")
+  end
+
   private
 
   def create_remember_token
