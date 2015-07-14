@@ -17,9 +17,9 @@ describe 'the admin dashboard', type: :feature do
     fill_in("password", :with => "password")
     click_button("Login")
   end
-  
+
   it 'has links to users restaurants' do
-    
+
     visit '/admin_dashboard'
     expect(page).to have_link "some", href: admin_restaurant_path(@restaurant)
   end

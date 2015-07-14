@@ -1,3 +1,5 @@
+require_relative '../feature_spec_helper'
+
 describe 'a restaurant owner', type: :feature do
   let(:user) { User.create(first_name: "Jane",
                 last_name: "Doe",
@@ -21,7 +23,7 @@ describe 'a restaurant owner', type: :feature do
     restaurant = user.restaurants.last
     item = restaurant.items.last
     visit admin_restaurant_path(restaurant)
-    
+
     expect(page).to have_content(restaurant.name)
     expect(page).to have_content("Thing")
     click_link("edit item")

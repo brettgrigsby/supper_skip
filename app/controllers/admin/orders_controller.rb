@@ -3,10 +3,7 @@ class Admin::OrdersController < AdminController
 
   def index
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
-    filter = known_scopes.find(-> { :all }) { |scope_name| scope_name == params[:scope] }
-    @orders = Order.public_send filter
-   # @orders = @restaurant.orders.public_send filter
-   # @orders = Order.find_by(restaurant_id: @restaurant.id)
+    @orders = Order.all.select { |order| order.restaurant_id == @restaurant.id }
   end
 
   def show
@@ -14,19 +11,9 @@ class Admin::OrdersController < AdminController
   end
 
   def edit
-
   end
+
   def update
-    @orders = Order.public_send filter
-  end
-
-  def run_event
-    user_order = Order.find(params[:id])
-    if user_order.aasm.may_fire_event? params[:event].to_sym # <-- to_sym exposes gc hack :/
-      user_order.public_send "#{params[:event]}!" # <--  dynamic method invocation *sigh* fkn metaprogramming, y'all
-     # user_order.public_method("#{params[:event]}!").call#.call('some_argument_1', 'some_argument_2')
-    end
-    redirect_to admin_restaurant_orders_path(@restaurant, scope: user_order.aasm_state)
   end
 
   def delete_item
@@ -39,9 +26,12 @@ class Admin::OrdersController < AdminController
   def find_restaurant
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
   end
+
+
   private
 
-  def known_scopes
-    @known_scopes ||= Order.aasm.states.map { |state| state.name.to_s }
+  def order_params
+    params.require(:order).permit(:workflow_state)
   end
 end
+

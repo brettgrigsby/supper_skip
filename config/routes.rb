@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :items, only: [:edit, :update, :destroy, :new, :create]
       resources :categories, only: [:new, :create, :edit, :update]
       resources :orders, only: [:index, :edit, :update, :destroy]
+     # get '/orders/:state', to: 'orders#index'
     end
     resources :categorizations, only: [:create, :destroy]
     resources :items do
@@ -26,7 +27,6 @@ Rails.application.routes.draw do
     end
     resources :categories
     resources :orders, only: [:index, :show, :edit, :update]
-    put '/restaurant/:restaurant_id/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
 
   post '/cart', to: 'cart_items#create'

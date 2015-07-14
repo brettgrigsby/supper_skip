@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20150714223604) do
   end
 
   create_table "orders", force: true do |t|
-    t.boolean  "delivery",      limit: 255
+    t.boolean  "delivery",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20150714223604) do
     t.string   "card_name"
     t.integer  "address_id"
     t.integer  "restaurant_id"
+    t.string   "workflow_state"
   end
 
   add_index "orders", ["restaurant_id"], name: "index_orders_on_restaurant_id"
