@@ -15,12 +15,9 @@ User.create!([
 ])
 
 
-User.all.each do |user|
-  if user.id < 7 
-    user.roles << user_role
-  else
-    user.roles << admin_role
-  end
+User.all.each do |user| 
+  user.roles << user_role
+  user.roles << admin_role if user.id > 6
 end
 
 
