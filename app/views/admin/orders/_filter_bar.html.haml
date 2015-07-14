@@ -1,43 +1,16 @@
--buttons = %w(paid ready_for_prep cancelled in_preparation ready_for_delivery out_for_delivery delivered)
 %button.all
   All (#{ @orders.count })
--buttons.each do |button|
-  %button{class: "#{button}"}
-    #{ button.gsub('_', ' ') } (#{ Order.send(button).count })
-
-
--# %button.all
--#   All (#{ @orders.count })
--# %button.paid
--#   Paid (#{ Order.with_paid_state.select { |order| order.restaurant_id == @restaurant.id }.count })
--# %button.ready_for_preparation
--#   Ready for Preparation (#{ Order.with_ready_for_prep_state.select { |order| order.restaurant_id == @restaurant.id }.count })
--# %button.cancelled
--#   Cancelled (#{ Order.with_cancelled_state.select { |order| order.restaurant_id == @restaurant.id }.count })
--# %button.in_preparation
--#   In Preparation (#{ Order.with_in_preparation_state.select { |order| order.restaurant_id == @restaurant.id }.count })
--# %button.ready_for_delivery
--#   Ready for Delivery (#{ Order.with_ready_for_delivery_state.select { |order| order.restaurant_id == @restaurant.id }.count })
--# %button.out_for_delivery
--#   Out for Delivery (#{ Order.with_out_for_delivery_state.select { |order| order.restaurant_id == @restaurant.id }.count })
--# %button.delivered
--#   Delivered (#{ Order.with_delivered_state.select { |order| order.restaurant_id == @restaurant.id }.count })
-
-
-
-
--#   state :paid do
--#     event :payment_received, :transitions_to => :ready_for_preparation
--#     event :cancel, :transitions_to => :cancelled
--#   state :ready_for_preparation do
--#     event :in_queue, :transitions_to => :in_preparation
--#     event :cancel, :transitions_to => :cancelled
--#   state :in_preparation do
--#     event :order_processed, :transitions_to => :ready_for_delivery
--#   state :ready_for_delivery do
--#     event :order_enroute, :transitions_to => :out_for_delivery
--#   state :out_for_delivery do
--#     event :complete, :transitions_to => :delivered
--#   state :cancelled
--#   state :delivered
--# end
+%button.paid
+  Paid (#{ Order.with_paid_state.select { |order| order.restaurant_id == @restaurant.id }.count })
+%button.ready_for_prep
+  Ready for Preparation (#{ Order.with_ready_for_prep_state.select { |order| order.restaurant_id == @restaurant.id }.count })
+%button.cancelled
+  Cancelled (#{ Order.with_cancelled_state.select { |order| order.restaurant_id == @restaurant.id }.count })
+%button.in_preparation
+  In Preparation (#{ Order.with_in_preparation_state.select { |order| order.restaurant_id == @restaurant.id }.count })
+%button.ready_for_delivery
+  Ready for Delivery (#{ Order.with_ready_for_delivery_state.select { |order| order.restaurant_id == @restaurant.id }.count })
+%button.out_for_delivery
+  Out for Delivery (#{ Order.with_out_for_delivery_state.select { |order| order.restaurant_id == @restaurant.id }.count })
+%button.delivered
+  Delivered (#{ Order.with_delivered_state.select { |order| order.restaurant_id == @restaurant.id }.count })
