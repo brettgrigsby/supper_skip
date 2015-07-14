@@ -5,17 +5,19 @@ User.create!([
   {first_name: "jeff", last_name: "", email: "demo+jeff@jumpstartlab.com", username: nil, password: "password", role: nil},
   {first_name: "user", last_name: "", email: "user@email.com", username: nil, password: "password", role: nil},
   {first_name: "admin", last_name: "", email: "admin@email.com", username: nil, password: "password", role: "admin"},
-  {first_name: "user5", last_name: "", email: "user5@email.com", username: nil, password: "password", role: nil},
-  {first_name: "user2", last_name: "", email: "user2@email.com", username: nil, password: "password", role: nil},
-  {first_name: "user3", last_name: "", email: "user3@email.com", username: nil, password: "password", role: nil},
-  {first_name: "user4", last_name: "", email: "user4@email.com", username: nil, password: "password", role: nil}
+  {first_name: "user5", last_name: "", email: "user5@email.com", username: nil, password: "password", role: "admin"},
+  {first_name: "user2", last_name: "", email: "user2@email.com", username: nil, password: "password", role: "admin"},
+  {first_name: "user3", last_name: "", email: "user3@email.com", username: nil, password: "password", role: "user"},
+  {first_name: "user4", last_name: "", email: "user4@email.com", username: nil, password: "password", role: "user"}
 ])
+
+admin_ids = User.where(role: "admin").pluck(:id)
 
 1.upto(10) do |v|
   Restaurant.create! ({ name: "Endangered Eats#{v}",
                         description: "insert whitty description here",
                         slug: "e-eats#{v}",
-                        user_id: rand(1..v)})
+                        user_id: admin_ids.sample})
 end
 
 1.upto(30) do |v|
