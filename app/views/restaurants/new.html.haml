@@ -1,15 +1,16 @@
 .container
-  .row.col-lg-6.col-lg-offset-3
-    %h2.form-newrestaurant-heading Create Your Restaurant
-    = form_for(@restaurant, html: { class: 'form-newrestaurant'}) do |f|
-      - if @restaurant.errors.any?
-        %ul#errors
-          - @restaurant.errors.full_messages.each do |error|
-            %li= error
-      = f.text_field :name, class: "form-control", placeholder: "restaurant name"
-      %br/
-      = f.text_field :description, class: "form-control", placeholder: "description"
-      %br/
-      = f.text_field :slug, class: "form-control", placeholder: "slug (optional)"
-      %br/
-      = f.submit "Make My Restaurant", class: "btn btn-med btn-block btn-primary", href: "new_restaurant_path"
+  .row
+    .col-lg-6.col-lg-offset-3
+      %h2.form-newrestaurant-heading Create Your Restaurant
+      = form_for(@restaurant, html: { class: 'form-newrestaurant' }) do |f|
+        - if @restaurant.errors.any?
+          %ul#errors
+            - @restaurant.errors.full_messages.each do |error|
+              %li= error
+        = f.text_field :name, class: "form-control", placeholder: "restaurant name"
+        %br/
+        = f.text_field :description, class: "form-control", placeholder: "description"
+        %br/
+        = f.text_field :slug, class: "form-control", placeholder: "slug (optional)"
+        %br/
+        = f.submit "Make My Restaurant", class: "btn btn-med btn-block btn-primary", href: "new_restaurant_path"

@@ -1,3 +1,8 @@
 .container.dash-buttons
+  - if current_user.restaurants
+    = link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
+  %h2 Your Restaurant(s)
   - current_user.restaurants.each do |restaurant|
     = link_to restaurant.name, admin_restaurant_path(restaurant), role: "button", :class => "btn btn-primary btn-lg btn-block"
+    %h5= link_to "edit #{restaurant.name}", edit_restaurant_path(restaurant)
+
