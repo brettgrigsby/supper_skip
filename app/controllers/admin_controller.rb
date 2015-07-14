@@ -14,8 +14,8 @@ class AdminController < ApplicationController
   end
 
   def check_user
-    unless current_user.restaurants.include?(@restaurant)
-      render :file => 'public/404.html', :status => :not_found
-    end
+    # unless current_user.restaurants.include?(@restaurant)
+    #   render :file => 'public/404.html', :status => :not_found
+    # end
   end
 end

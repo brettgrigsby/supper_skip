@@ -1,13 +1,12 @@
 .order-display
   -@orders.reverse.each_with_index do |order, i|
-    #accordian.panel-group
-      .panel.panel-default
-        .panel-heading
-          %h4.panel-title
-            %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse#{i}"}
-              = "Order ##{order.id}"
-              = "#{order.created_at.to_formatted_s(:long_ordinal)}"
-              = "|| #{order.aasm_state.capitalize}"
+    #accordian.panel-group.hidden{ class: order.current_state }
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse#{i}"}
+            = "Order ##{order.id}"
+            = "#{order.created_at.to_formatted_s(:long_ordinal)}"
+            = "|| #{order.current_state}"
       .panel-collapse.collapse{:id => "collapse#{i}"}
         .panel-body
           %table.table-hover.col-lg-12
@@ -30,7 +29,7 @@
             = link_to "View Order", admin_restaurant_order_path(@restaurant, order), :role => "button", :class => "btn btn-primary"
             ="Total: $#{order.total_price_for_humans}"
           %h4.pull-left
-            - if order.can_complete?
-              = link_to "Mark as Completed", admin_order_event_path(@restaurant, order, event: 'complete'), method: "put", :role => "button", :class => "btn btn-success"
-            - if order.can_cancel?
-              = link_to "Cancel Order",      admin_order_event_path(@restaurant, order, event: 'cancel'),   method: "put", :role => "button", :class => "btn btn-danger"
+-#            - if order.can_complete?
+-#              = link_to "Mark as Completed", admin_order_event_path(@restaurant, order, event: 'complete'), method: "put", :role => "button", :class => "btn btn-success"
+-#            - if order.can_cancel?
+-#              = link_to "Cancel Order",      admin_order_event_path(@restaurant, order, event: 'cancel'),   method: "put", :role => "button", :class => "btn btn-danger"

@@ -22,7 +22,7 @@ end
   Category.create! ({ name: "Category#{v}", restaurant_id: rand(1..v) })
 end
 
-1.upto(50) do |v|
+1.upto(500) do |v|
   Item.create!({ title: "Grilled Greed Rusty Blackbird Bun#{v}",
                  description: "Steamed Sesame Bun, Scallions & Miso-Pickled Cucumbers",
                  price: rand(1..2000),
@@ -41,16 +41,16 @@ Item.all.each do |item|
 end
 
   def all_order_states
-    [:paid_order,
-     :ready_for_preparation_order,
-     :in_preparation_order,
-     :ready_for_delivery_order,
-     :out_for_delivery_order,
-     :delivered_order,
-     :cancelled_order]
+    [:paid,
+     :ready_for_prep,
+     :in_preparation,
+     :ready_for_delivery,
+     :out_for_delivery,
+     :delivered,
+     :cancelled]
   end
 
-1.upto(50) do |order|
+1.upto(500) do |order|
   Order.create!({ delivery: true,
                   user_id: rand(1..User.all.size),
                   workflow_state: "#{all_order_states.sample}",
