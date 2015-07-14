@@ -10,7 +10,9 @@ class AdminController < ApplicationController
   private
 
   def authorize
-    redirect_to "https://www.youtube.com/watch?v=4dGOfFbzvq4&t=0m45s" unless current_user.role == "admin"
+    unless current_user.role == "admin" || current_user.roles.pluck(:title).include?("admin")
+      redirect_to "https://www.youtube.com/watch?v=4dGOfFbzvq4&t=0m45s" 
+    end
   end
 
   def check_user
