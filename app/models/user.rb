@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
     username || full_name
   end
 
+  def basket
+    orders.where(status: "basket")
+  end
+
   private
 
   def create_remember_token
