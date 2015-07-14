@@ -11,13 +11,13 @@ class Order < ActiveRecord::Base
 
   workflow do
     state :paid do
-      event :payment_confirmed, :transitions_to => :ready_for_preparation
-      event :order_cancelled, :transitions_to => :cancelled
+      event :payment_received, :transitions_to => :ready_for_preparation
+      event :cancel, :transitions_to => :cancelled
     end
 
     state :ready_for_preparation do
       event :in_queue, :transitions_to => :in_preparation
-      event :order_cancelled, :transitions_to => :cancelled
+      event :cancel, :transitions_to => :cancelled
     end
 
     state :in_preparation do
@@ -29,7 +29,7 @@ class Order < ActiveRecord::Base
     end
 
     state :out_for_delivery do
-      event :order_received, :transitions_to => :delivered
+      event :complete, :transitions_to => :delivered
     end
     state :cancelled
     state :delivered

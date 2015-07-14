@@ -1,14 +1,10 @@
 class Admin::OrdersController < AdminController
   before_action :find_restaurant, only: [:index, :edit, :update, :new, :create]
+  before_action :find_state
 
   def index
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
-
-
-    filter = known_scopes.find(-> { :all }) { |scope_name| scope_name == params[:scope] }
-    @orders = Order.public_send filter
-   # @orders = @restaurant.orders.public_send filter
-   # @orders = Order.find_by(restaurant_id: @restaurant.id)
+    @orders = Order.select(restaurant_id: @restaurant.id)
   end
 
   def show
@@ -16,10 +12,10 @@ class Admin::OrdersController < AdminController
   end
 
   def edit
-
   end
+
   def update
-    @orders = Order.public_send filter
+#  @orders = Order.public_send filter
   end
 
   def run_event
@@ -41,13 +37,15 @@ class Admin::OrdersController < AdminController
   def find_restaurant
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
   end
+
+  def find_state
+  end
+
   private
 
   def order_params
     params.require(:order).permit(:workflow_state)
   end
 
-  # def known_scopes
-  #   @known_scopes ||= Order.aasm.states.map { |state| state.name.to_s }
-  # end
 end
+

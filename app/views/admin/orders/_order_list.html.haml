@@ -30,9 +30,7 @@
             = link_to "View Order", admin_restaurant_order_path(@restaurant, order), :role => "button", :class => "btn btn-primary"
             ="Total: $#{order.total_price_for_humans}"
           %h4.pull-left
-            - if order.may_pay?
-              = link_to "Mark as Paid",      admin_order_event_path(@restaurant.id, order, event: 'pay'),      method: "put", :role => "button", :class => "btn btn-success"
-            - if order.may_complete?
+            - if order.can_complete?
               = link_to "Mark as Completed", admin_order_event_path(@restaurant, order, event: 'complete'), method: "put", :role => "button", :class => "btn btn-success"
-            - if order.may_cancel?
+            - if order.can_cancel?
               = link_to "Cancel Order",      admin_order_event_path(@restaurant, order, event: 'cancel'),   method: "put", :role => "button", :class => "btn btn-danger"
