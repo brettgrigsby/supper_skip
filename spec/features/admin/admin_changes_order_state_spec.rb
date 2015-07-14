@@ -21,7 +21,6 @@ describe "an admin changes order state" do
   it "changes one order from paid to cancelled state" do
     visit admin_restaurant_orders_path(@restaurant)
 
-    save_and_open_page
     within "h4.pull-left" do
       click_link_or_button 'Cancel Order'
     end
