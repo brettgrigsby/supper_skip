@@ -1,25 +1,19 @@
 require_relative 'feature_spec_helper'
 
 describe 'an order', type: :feature do
-  let(:current_order) { Order.create!(delivery: true) }
-  let(:restaurant) { Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug') }
-  let(:item) { restaurant.items.create!(title: 'myitem', description: 'a item', price: 5 ) }
+  let(:restaurant1) { Restaurant.create!(name: 'testRest1', description: 'passing or not', slug: 'slug1') }
+  let(:item1) { restaurant1.items.create!(title: 'myitem1', description: 'a item1', price: 5 ) }
+  let(:restaurant2) { Restaurant.create!(name: 'testRest2', description: 'passing or not', slug: 'slug2') }
+  let(:item2) { restaurant2.items.create!(title: 'myitem2', description: 'a item2', price: 5 ) }
 
-  it 'starts with zero items' do
-    visit restaurant_items_path(restaurant, item)
-    visit cart_path
-
-    expect(page).to have_content("You don't have any items in your cart!")
-  end
-
- xit 'can add items from two different restaurants' do
-    item = create :item, title: "shrip"
-    item.categories.create(name: 'Appetizers')
-
-    visit restaurant_items_path(restaurant, item)
+ it 'can add items from two different restaurants' do
+    visit restaurant_item_path(restaurant1, item1)
     click_button("Add to Cart")
-     visit order_path(current_order)
-
-    expect(page).to have_content("John")
+    visit restaurant_item_path(restaurant2, item2)
+    click_button("Add to Cart")
+    visit cart_path
+ 
+    expect(page).to have_content("myitem1")
+    expect(page).to have_content("myitem2")
   end
 end
