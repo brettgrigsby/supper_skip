@@ -21,9 +21,8 @@ RSpec.describe Order, :type => :model do
     expect(order).to be_valid
   end
 
-  it 'is valid if delivery is false' do
-    #order.delivery = false
-    order.delivered?
+  it 'is valid with delivery designated as false' do
+    refute(order.delivered?)
     expect(order).to be_valid
   end
 
