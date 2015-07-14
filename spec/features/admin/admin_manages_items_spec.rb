@@ -2,9 +2,9 @@ describe 'a restaurant owner', type: :feature do
   let(:user) { User.create(first_name: "Jane",
                 last_name: "Doe",
                 email: "jane@jane.com",
-                password: "password",
-                role: "admin") }
+                password: "password") }
   before do
+    user.roles.create(title: "admin")
     user.restaurants.create!(name: "Restaurant", description: "restaurant description", slug: "rest")
     user.restaurants.first.items.create(title: "Thing", 
 					description: "item description",
