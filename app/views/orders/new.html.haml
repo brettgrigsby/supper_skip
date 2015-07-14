@@ -1,0 +1,31 @@
+.container
+  .panel.panel-default
+    %h1.panel-heading Your Order
+    .panel-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Title
+            %th Description
+            %th Price
+            %th Quantity
+            %th Item Subtotal
+        %tbody
+        -if @cart.items.empty?
+          %tr You don't have any items in your cart!
+        -else
+          -@cart.items.each do |item|
+            %tr
+              %td #{item.first.title}
+              %td #{item.first.description}
+              %td $#{item.first.price_for_humans}
+              %td #{item.last}
+              %td #{number_to_currency((item.first.price * item.last).to_f / 100)}
+    #order-total
+      %h3.text-muted.pull-right= "Order Subtotal: $#{@cart.total_price}"
+ 
+.container
+  .row.pull-right
+    %ul.nav.nav-pills
+      %li.active
+        = button_to "Confirm Checkout", orders_path

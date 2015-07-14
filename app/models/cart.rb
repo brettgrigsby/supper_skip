@@ -27,5 +27,9 @@ class Cart
   def clear
     @contents = {}
   end
+
+  def sort_orders
+    items.group_by { |item, quantity| item.restaurant_id }.to_a
+  end
 end
 

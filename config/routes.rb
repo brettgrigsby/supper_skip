@@ -7,14 +7,7 @@ Rails.application.routes.draw do
   resources :users,       only: [:new, :create, :show, :index ]
   resources :sessions,    only: [:new, :create, :destroy]
   resources :order_items, only: [:update]
-  resources :addresses,   only: [:create]
-  resources :orders,      except: [:new] do
-    member do
-      post :add_item
-      post :delete_item
-    end
-  end
-
+  resources :orders,      only: [:new, :create]
   resources :addresses
 
   namespace :admin do

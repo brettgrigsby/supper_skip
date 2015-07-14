@@ -32,12 +32,11 @@
       %h3.text-muted.pull-right= "Order Subtotal: $#{@cart.total_price}"
  
 -if signed_in?
-  -unless order.total == 0|| order.empty?
-    .container
-      .row.pull-right
-        %ul.nav.nav-pills
-          %li.active
-            = link_to "Proceed to Checkout", checkout_path
+  .container
+    .row.pull-right
+      %ul.nav.nav-pills
+        %li.active
+          = link_to "Proceed to Checkout", new_order_path
 -else
   .container
     .col-lg-5-offset-3.pull-right
