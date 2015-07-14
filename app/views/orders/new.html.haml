@@ -2,25 +2,24 @@
   .panel.panel-default
     %h1.panel-heading Your Order
     .panel-body
-      %table.table.table-striped
-        %thead
-          %tr
-            %th Title
-            %th Description
-            %th Price
-            %th Quantity
-            %th Item Subtotal
-        %tbody
-        -if @cart.items.empty?
-          %tr You don't have any items in your cart!
-        -else
-          -@cart.items.each do |item|
+      -@cart.sort_orders.each do |restaurant_id, order_items|
+        %h2= Restaurant.find(restaurant_id).name
+        %table.table.table-striped
+          %thead
             %tr
-              %td #{item.first.title}
-              %td #{item.first.description}
-              %td $#{item.first.price_for_humans}
-              %td #{item.last}
-              %td #{number_to_currency((item.first.price * item.last).to_f / 100)}
+              %th Title
+              %th Description
+              %th Price
+              %th Quantity
+              %th Item Subtotal
+          %tbody
+          -order_items.each do |item, quantity|
+            %tr
+              %td #{item.title}
+              %td #{item.description}
+              %td $#{item.price_for_humans}
+              %td #{quantity}
+              %td #{number_to_currency((item.price * quantity).to_f / 100)}
     #order-total
       %h3.text-muted.pull-right= "Order Subtotal: $#{@cart.total_price}"
  

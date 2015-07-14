@@ -19,6 +19,8 @@ class OrdersController < ApplicationController
         order.order_items.create(item_id: item.id, quantity: quantity)
       end
     end
+    @cart.clear
+    session[:cart] = @cart.contents
     redirect_to current_user
   end
 
