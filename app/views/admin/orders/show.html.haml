@@ -1,6 +1,7 @@
 .container
   .order-header
     %h2= "Order: #{@user_order.id}"
+    =link_to "Resturn to Orders", admin_restaurant_orders_path(@user_order.restaurant_id)
     .order-info-table-div
       %table.table.table-striped.order-info-table
         %thead
@@ -28,7 +29,7 @@
       %tbody.order-items
         -@user_order.order_items.each do |order_item|
           %tr
-            %td= link_to order_item.item.title, restaurant_item_path(@user_order.restaurant_id, order_item.item)
+            -# %td= link_to order_item.item.title, restaurant_item_path(@user_order.restaurant_id, order_item.item)
             %td= order_item.item.description
             %td= order_item.item.price_for_humans
             %td= order_item.quantity
@@ -37,8 +38,7 @@
                 = form_for 'item', method: 'PUT', :url => {:controller => 'order_items', action: :update, id: order_item.id } do |f|
                   .field
                     = f.number_field :quantity, :value => order_item.quantity
-                    = submit_tag "Update", class: "btn btn-primary"
-              %td= link_to "Remove", admin_restaurant_item_path(@user_order.restaurant_id, item_id: order_item.item.id), method: :delete, class: "btn btn-danger"
-            %td= "$#{quantity_price_for_humans(order_item.item, order)}"
+                    = submit_tag "Update", class: "btn btn-primary", 'data-action' => 'update'
+            %td= "$#{calculate_subtotal(order_item)}"
     %h4.pull-right
       ="Total: $#{@user_order.total_price_for_humans}"
