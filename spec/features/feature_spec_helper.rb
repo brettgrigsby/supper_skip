@@ -12,7 +12,9 @@ module AdminHelper
   end
 
   def log_me_in_with_role(role)
-    user = build(:user, role: role)
+    user = build(:user)
+    user.save
+    user.roles.create!(title: role)
     allow_any_instance_of(ApplicationController)
       .to receive(:current_user) { user }
     user
