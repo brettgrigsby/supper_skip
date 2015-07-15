@@ -3,7 +3,7 @@ class Admin::OrdersController < AdminController
 
   def index
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
-    @orders = Order.all.select { |order| order.restaurant_id == @restaurant.id }
+    @orders = @restaurant.orders
   end
 
   def show

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :restaurants, only: [:show, :edit, :update, :destroy] do
       resources :items, only: [:edit, :update, :destroy, :new, :create]
       resources :categories, only: [:new, :create, :edit, :update]
-      resources :orders, only: [:index, :edit, :update, :destroy]
+      resources :orders, only: [:index, :show, :edit, :update, :destroy]
      # get '/orders/:state', to: 'orders#index'
     end
     resources :categorizations, only: [:create, :destroy]
