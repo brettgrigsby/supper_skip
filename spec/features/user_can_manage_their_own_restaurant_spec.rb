@@ -4,8 +4,7 @@ describe 'a users restaurant', type: :feature do
   let(:user) { User.create!(	first_name: "T",
 				last_name: "money",
 				email: "test@best.com",
-				password: "password",
-        role: "admin")}
+				password: "password" )}
   let(:restaurant) { Restaurant.create!(name: "Testaurant", description: "tastes funny", slug: 'testy', user_id: user.id) }
 
   before do
@@ -20,7 +19,7 @@ describe 'a users restaurant', type: :feature do
     click_button("Login")
     visit admin_dashboard_path(user)
 
-    expect(page).to have_link("edit Testaurant")
+    expect(page).to have_link("Edit Testaurant")
   end
 
   xit 'can be edited by the user that created it' do

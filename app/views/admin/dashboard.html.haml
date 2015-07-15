@@ -3,8 +3,9 @@
     = link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
   %h2 Your Restaurant(s)
   - current_user.restaurants.each do |restaurant|
-    %h5= link_to "edit #{restaurant.name}", edit_restaurant_path(restaurant)
     =link_to restaurant.name, admin_restaurant_path(restaurant), :class => "btn btn-primary btn-long btn-inline"
     =link_to "Orders", admin_restaurant_orders_path(restaurant), :class => "btn btn-primary btn-long btn-inline"
     %br
-    %h4= link_to "Add Staff", new_admin_restaurant_user_role_path(restaurant)
+    %h4= link_to "Add Staff", new_admin_restaurant_user_role_path(restaurant), :class => "inline"
+    %h5= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
+    %br
