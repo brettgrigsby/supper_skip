@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :restaurants, only: [:show, :edit, :update, :destroy] do
       resources :items, only: [:edit, :update, :destroy, :new, :create]
-      resources :categories, only: [:new, :create, :edit, :update]
+      resources :categories, only: [:new, :create, :edit, :update, :destroy]
       resources :orders, only: [:index, :edit, :update, :destroy]
     end
     resources :categorizations, only: [:create, :destroy]

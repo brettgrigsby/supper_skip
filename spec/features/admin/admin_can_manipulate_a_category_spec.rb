@@ -11,19 +11,38 @@ describe 'admin', type: :feature do
     @category = @restaurant.categories.create!(name: "Small Plates")
     visit "/"
     first(:link, "Login").click
-
     fill_in("email address", :with => "jane@jane.com")
     fill_in("password", :with => "password")
     click_button("Login")
   end
 
   it 'edits a category' do
-    visit '/admin_dashboard'
     restaurant = Restaurant.last
+    visit '/admin_dashboard'
+
     expect(restaurant.categories.pluck(:name)).to include("Small Plates")
+
     click_link('Restaurant')
     click_link('edit category')
 
-    expect(current_path).to eq(edit_admin_restaurant_category_path(@category.id))
+    expect(current_path).to eq(edit_admin_restaurant_category_path(@restaurant, @category))
+
+    fill_in("name", with: "Large Platters")
+    click_button('Submit Changes')
+
+    expect(current_path).to eq(admin_restaurant_path(@restaurant))
+    expect(page).to have_content("Large Platters")
+  end
+
+  it 'deletes a category' do
+    restaurant = Restaurant.last
+
+    visit '/admin_dashboard'
+
+    expect(restaurant.categories.pluck(:name)).to include("Small Plates")
+    click_link('Restaurant')
+    click_link('remove category')
+
+    expect(restaurant.categories.pluck(:name)).not_to include("Small Plates")
   end
 end

@@ -9,6 +9,7 @@
       - @restaurant.categories.each do |category|
         %h3= link_to category.name, category
         = link_to "edit category", edit_admin_restaurant_category_path(@restaurant, category), class: "thumbnail-btn btn-sm btn-primary"
+        = link_to "remove category", admin_restaurant_category_path(@restaurant, category), method: :delete, class: "thumbnail-btn btn-sm btn-danger", data: {confirm: "Are you sure?"}
     .col-lg-6.col-lg-offset-0
       = link_to "Add Item", new_admin_restaurant_item_path(@restaurant), class: "thumbnail-btn btn-lg btn-primary"
       %br
