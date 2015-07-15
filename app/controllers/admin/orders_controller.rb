@@ -1,7 +1,7 @@
 class Admin::OrdersController < AdminController
   before_action :find_restaurant, only: [:index, :edit, :update, :new, :create]
 
-  def index
+  def index # do not delete either of these
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
     @orders = @restaurant.orders
   end
@@ -13,15 +13,25 @@ class Admin::OrdersController < AdminController
   def edit
   end
 
-  def update
+  def update # this works to cancel the order
+    @order = Order.find(params[:id])
+    if params['data-action'] == 'cancel'
+      @order.cancel! if @order.can_cancel?
+      redirect_to admin_restaurant_orders_path(@order.restaurant_id)
+    # else
+      # item = Item.find(params[:item_id])
+      # @order = Order.find(params[:id])
+      # @order.remove_item(item)
+      # redirect_to admin_restaurant_order_path(@restaurant, @order.id)
+    end
   end
 
-  def delete_item
-    item = Item.find(params[:item_id])
-    @order = Order.find(params[:id])
-    @order.remove_item(item)
-    redirect_to admin_restaurant_order_path(@restaurant, @order.id)
-  end
+  # def delete_item
+  #   item = Item.find(params[:item_id])
+  #   @order = Order.find(params[:id])
+  #   @order.remove_item(item)
+  #   redirect_to admin_restaurant_order_path(@restaurant, @order.id)
+  # end
 
   def find_restaurant
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
