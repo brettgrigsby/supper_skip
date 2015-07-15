@@ -8,6 +8,7 @@ class Admin::UserRolesController < AdminController
   end
 
   def create
+    create_staff_user unless @user
     UserRole.create(user: @user, role: @role, restaurant: @restaurant)
     flash[:success] = "Staff Member Added!"
     redirect_to admin_dashboard_path
@@ -21,5 +22,9 @@ class Admin::UserRolesController < AdminController
 
   def load_role
     @role = Role.find_by(title: params[:role])
+  end
+
+  def create_staff_user
+    
   end
 end
