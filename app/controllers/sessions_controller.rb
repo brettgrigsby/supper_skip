@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:session][:email].downcase)
     if @user && @user.authenticate(params[:session][:password])
       sign_in @user
-      if @user.role == "admin"
+      if @user.admin?
         redirect_to admin_dashboard_path
       else
         redirect_to @user

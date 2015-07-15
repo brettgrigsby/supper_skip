@@ -7,6 +7,10 @@ RSpec.describe User, :type => :model do
     expect(user).to be_valid
   end
 
+  it 'returns a collection of its roles' do
+    expect(user).to respond_to(:roles)
+  end
+
   it 'is valid without a last name' do
     user.last_name = nil
     expect(user).to be_valid

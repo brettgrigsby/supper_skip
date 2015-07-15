@@ -2,12 +2,12 @@ require_relative 'feature_spec_helper'
 
 describe 'a new restaurant', type: :feature do
   before do
-    User.create(first_name: "Jane",
-                last_name: "Doe",
-                email: "jane@jane.com",
-                password: "password",
-                role: "user")
-
+    user = User.create(	first_name: "Jane",
+                	last_name: "Doe",
+                	email: "jane@jane.com",
+                	password: "password")
+    user.roles.create(title: "user")
+    Role.create(title: "admin")
     visit "/"
     first(:link, "Login").click
 
@@ -63,7 +63,7 @@ describe 'a new restaurant', type: :feature do
 
     expect(current_path).to eq('/restaurants/dawgs-r-cool')
     admin = User.find_by(email: "jane@jane.com")
-    expect(admin.role).to eq('admin')
+    expect(admin.roles.pluck(:title)).to include('admin')
 
   end
 end

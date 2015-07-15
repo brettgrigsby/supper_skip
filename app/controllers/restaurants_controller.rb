@@ -33,7 +33,7 @@ class RestaurantsController < ApplicationController
     create_slug if @restaurant.slug.empty?
     @restaurant.user = current_user
     if @restaurant.save
-      current_user.role = 'admin'
+      current_user.roles << admin_role
       current_user.save(validate: false)
       flash[:success] = "You have created #{@restaurant.name}"
 
