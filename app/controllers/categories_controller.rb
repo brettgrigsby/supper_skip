@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
+    @restaurant = @category.restaurant
   end
 
   def category_params

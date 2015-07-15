@@ -1,6 +1,17 @@
 = render partial: 'layouts/shared/carousel', :locals => { :restaurant => @restaurant }
-- @restaurant.categories.each do |category|
-  %h3= link_to category.name, category
-- @restaurant.items.each do |item|
-  %h4= link_to item.title, restaurant_item_path(item.restaurant_id, item)
-  = button_to "Add to Cart", add_item_order_path(order, item_id: item.id), class: "#{item.title} btn btn-primary"
+.container
+  .col-lg-12.col-lg-offset-0
+    - @restaurant.categories.each do |category|
+      = link_to category.name, category, class: "btn btn-sm btn-primary"
+%br
+%br
+.container
+  -@restaurant.items.each do |item|
+    .col-sm-6.col-md-4
+      .thumbnail
+        %img{:src => "#{item.image_file_name}", width: "242", height: "242"}
+        .caption
+          %h3= link_to "#{item.title}", restaurant_item_path(item.restaurant_id, item)
+          %p=truncate(item.description, :length => 45)
+          %p $ #{item.price_for_humans}
+          = button_to "Add to Cart", add_item_order_path(order, item_id: item.id), class: "btn btn-primary"

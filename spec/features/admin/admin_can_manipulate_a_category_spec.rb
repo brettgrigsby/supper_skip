@@ -2,7 +2,7 @@ require_relative '../feature_spec_helper'
 
 describe 'admin', type: :feature do
   before do
-    @user = User.create(first_name: "Jane",
+    @user = User.create!(first_name: "Jane",
       last_name: "Doe",
       email: "jane@jane.com",
       password: "password",
@@ -31,7 +31,7 @@ describe 'admin', type: :feature do
     click_button('Submit Changes')
 
     expect(current_path).to eq(admin_restaurant_path(@restaurant))
-    expect(page).to have_content("Large Platters")
+    expect(page).to have_content "Large Platters"
   end
 
   it 'deletes a category' do
@@ -43,6 +43,6 @@ describe 'admin', type: :feature do
     click_link('Restaurant')
     click_link('remove category')
 
-    expect(restaurant.categories.pluck(:name)).not_to include("Small Plates")
+    expect(page).not_to have_content "Small Plates"
   end
 end
