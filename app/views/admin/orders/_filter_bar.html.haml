@@ -1,7 +1,5 @@
 %button.all
   All (#{ @orders.count })
-%button.paid
-  Paid (#{ @orders.with_paid_state.count })
 %button.ready_for_prep
   Ready for Preparation (#{ @orders.with_ready_for_prep_state.count })
 %button.cancelled

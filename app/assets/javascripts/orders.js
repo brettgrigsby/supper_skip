@@ -12,11 +12,6 @@ $(document).ready ( function () {
     showAll();
   });
 
-  $("button.paid").click(function() {
-    hideAll();
-    $('div.paid').removeClass('hidden');
-  });
-
   $("button.ready_for_prep").click(function() {
     hideAll();
     $('div.ready_for_prep').toggleClass('hidden');
