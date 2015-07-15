@@ -44,7 +44,6 @@ describe 'admin adding staff', type: :feature do
     click_button 'Add To Staff'
 
     expect(current_path).to eq(admin_dashboard_path)
-    binding.pry
     expect(user.roles.pluck(:title)).to include('cook')
   end
 end
