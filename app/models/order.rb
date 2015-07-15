@@ -1,39 +1,62 @@
 class Order < ActiveRecord::Base
-  include AASM
+  include Workflow
 
   belongs_to :user
   has_many :order_items
   has_many :items, through: :order_items
   belongs_to :restaurant
   belongs_to :address
-  validates :delivery, inclusion: { in: [true, false] }
 
-  aasm do
-    state :basket, :initial => true
-    state :ordered
-    state :paid
-    state :completed
+  workflow do
+    state :paid do
+      event :payment_received, :transitions_to => :ready_for_prep
+      event :cancel, :transitions_to => :cancelled
+    end
+
+    state :ready_for_prep do
+      event :in_queue, :transitions_to => :in_preparation
+      event :cancel, :transitions_to => :cancelled
+    end
+
+    state :in_preparation do
+      event :order_processed, :transitions_to => :ready_for_delivery
+    end
+
+    state :ready_for_delivery do
+      event :order_enroute, :transitions_to => :out_for_delivery
+    end
+
+    state :out_for_delivery do
+      event :complete, :transitions_to => :delivered
+    end
     state :cancelled
+    state :delivered
+  end
 
-    event :order do
-      transitions :from => :basket, :to => :ordered
-    end
-
-    event :pay do
-      transitions :from => :ordered, :to => :paid, before_enter: :erase_current_order
-    end
-
-    event :complete do
-      transitions :from => :paid, :to => :completed
-    end
-
-    event :cancel do
-      transitions :from => [:basket, :ordered, :paid], :to => :cancelled
-    end
+  def self.paid
+    self.with_paid_state
+  end
+  def self.ready_for_prep
+    self.with_ready_for_prep_state
+  end
+  def self.cancelled
+    self.with_cancelled_state
+  end
+  def self.in_preparation
+    self.with_in_preparation_state
+  end
+  def self.ready_for_delivery
+    self.with_ready_for_delivery_state
+  end
+  def self.out_for_delivery
+    self.with_out_for_delivery_state
+  end
+  def self.delivered
+    self.with_delivered_state
   end
 
   def pay_in_store?
-    ccn == nil && expdate == nil
+    ccn.nil? && expdate.nil?
   end
 
   def add_item(item)

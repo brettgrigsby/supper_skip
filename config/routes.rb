@@ -7,21 +7,15 @@ Rails.application.routes.draw do
   resources :users,       only: [:new, :create, :show, :index ]
   resources :sessions,    only: [:new, :create, :destroy]
   resources :order_items, only: [:update]
-  resources :addresses,   only: [:create]
-  resources :orders,      except: [:new] do
-    member do
-      post :add_item
-      post :delete_item
-    end
-  end
-
+  resources :orders,      only: [:new, :create]
   resources :addresses
 
   namespace :admin do
     resources :restaurants, only: [:show, :edit, :update, :destroy] do
       resources :items, only: [:edit, :update, :destroy, :new, :create]
       resources :categories, only: [:new, :create, :edit, :update, :destroy]
-      resources :orders, only: [:index, :edit, :update, :destroy]
+      resources :orders, only: [:index, :show, :edit, :update, :destroy]
+      resources :user_roles, only: [:new, :create]
     end
     resources :categorizations, only: [:create, :destroy]
     resources :items do
@@ -33,8 +27,12 @@ Rails.application.routes.draw do
     end
     resources :categories
     resources :orders, only: [:index, :show, :edit, :update]
-    put '/restaurant/:restaurant_id/orders/:id/run_event', to: 'orders#run_event', as: :order_event
   end
+
+  post '/cart', to: 'cart_items#create'
+  get '/cart', to: 'cart_items#index'
+  put '/cart', to: 'cart_items#update'
+
 
   get   '/menu',             to: 'items#index'
   match '/about_us',         to: 'pages#about_us',    via: 'get'
@@ -46,7 +44,6 @@ Rails.application.routes.draw do
   get   '/confirm',          to: 'orders#confirm'
   match '/admin_dashboard',  to: 'admin#dashboard',   via: 'get'
   get   '/code',             to: 'pages#code'
-#  delete '/admin/:id/orders', to: 'admin/orders#delete_item', as: "admin_delete_order_item"
   put   '/admin/order_items/:id', to: 'admin/order_items#update'
   match "*a",                to: 'errors#routing_error', via: 'get'
 

@@ -1,10 +1,12 @@
+require_relative '../feature_spec_helper'
+
 describe 'a restaurant owner', type: :feature do
   let(:user) { User.create(first_name: "Jane",
                 last_name: "Doe",
                 email: "jane@jane.com",
-                password: "password",
-                role: "admin") }
+                password: "password") }
   before do
+    user.roles.create(title: "admin")
     user.restaurants.create!(name: "Restaurant", description: "restaurant description", slug: "rest")
     user.restaurants.first.items.create(title: "Thing", 
 					description: "item description",
@@ -21,7 +23,7 @@ describe 'a restaurant owner', type: :feature do
     restaurant = user.restaurants.last
     item = restaurant.items.last
     visit admin_restaurant_path(restaurant)
-    
+
     expect(page).to have_content(restaurant.name)
     expect(page).to have_content("Thing")
     click_link("edit item")
@@ -42,8 +44,8 @@ describe 'a restaurant owner', type: :feature do
     user2 = User.create!(first_name: "Other",
 			last_name: "User",
 			email: "something@some.com",
-			password: "password",
-			role: "admin")
+			password: "password")
+    user2.roles.create(title: "admin")
     restaurant2 = user2.restaurants.create!(name: "Dudes", description: "yep", slug: "dudes")
     item2 = restaurant2.items.create!(title: "Stuff", description: "huge", price: 300)
     visit admin_restaurant_path(restaurant)

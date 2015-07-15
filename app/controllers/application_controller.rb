@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user, :signed_in?, :order
+  before_action :cart_loader
 
   def routing_error
     render "404", :status => 404
@@ -55,5 +56,21 @@ class ApplicationController < ActionController::Base
     current_order = Order.create!(delivery: true)
     session[:order_id] = current_order.id
     current_order
+  end
+
+  def cart_loader
+    @cart = Cart.new(session[:cart])
+  end
+
+  def admin_role
+    Role.find_by(title: "admin")
+  end
+
+  def user_role
+    Role.find_by(title: "user")
+  end
+
+  def load_restaurant
+    @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
   end
 end

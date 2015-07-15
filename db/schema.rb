@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709172603) do
+ActiveRecord::Schema.define(version: 20150715141511) do
 
   create_table "addresses", force: true do |t|
     t.integer  "order_id"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20150709172603) do
   end
 
   create_table "orders", force: true do |t|
-    t.boolean  "delivery",      limit: 255
+    t.boolean  "delivery",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20150709172603) do
     t.string   "card_name"
     t.integer  "address_id"
     t.integer  "restaurant_id"
+    t.string   "workflow_state"
   end
 
   add_index "orders", ["restaurant_id"], name: "index_orders_on_restaurant_id"
@@ -109,6 +110,24 @@ ActiveRecord::Schema.define(version: 20150709172603) do
 
   add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id"
 
+  create_table "roles", force: true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_roles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "restaurant_id"
+  end
+
+  add_index "user_roles", ["restaurant_id"], name: "index_user_roles_on_restaurant_id"
+  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id"
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id"
+
   create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -118,7 +137,6 @@ ActiveRecord::Schema.define(version: 20150709172603) do
     t.datetime "updated_at"
     t.string   "password_digest"
     t.string   "remember_token"
-    t.string   "role"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
