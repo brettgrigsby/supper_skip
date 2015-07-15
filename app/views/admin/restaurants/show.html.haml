@@ -1,8 +1,20 @@
 = render partial: 'layouts/shared/carousel', :locals => { :restaurant => @restaurant }
-- @restaurant.categories.each do |category|
-  %h3= link_to category.name, category
-- @restaurant.items.each do |item|
-  %h4= link_to item.title, restaurant_item_path(@restaurant, item)
-  %h5= link_to "edit item", edit_admin_restaurant_item_path(@restaurant, item)
-%h2= link_to "Add Item", new_admin_restaurant_item_path(@restaurant)
-%h2= link_to "Add Category", new_admin_restaurant_category_path(@restaurant)
+.container
+  .row
+    .col-lg-6.col-lg-offset-0
+      = link_to "Add Category", new_admin_restaurant_category_path(@restaurant), class: "thumbnail-btn btn-lg btn-primary"
+      %br
+      %br
+      %h2 Categories
+      - @restaurant.categories.each do |category|
+        %h3= link_to category.name, category
+        = link_to "edit category", edit_admin_restaurant_category_path(@restaurant, category), class: "thumbnail-btn btn-sm btn-primary"
+        = link_to "remove category", admin_restaurant_category_path(@restaurant, category), method: :delete, class: "thumbnail-btn btn-sm btn-danger", data: {confirm: "Are you sure?"}
+    .col-lg-6.col-lg-offset-0
+      = link_to "Add Item", new_admin_restaurant_item_path(@restaurant), class: "thumbnail-btn btn-lg btn-primary"
+      %br
+      %br
+      %h2 Items
+      - @restaurant.items.each do |item|
+        %h3= link_to item.title, restaurant_item_path(@restaurant, item)
+        = link_to "edit item", edit_admin_restaurant_item_path(@restaurant, item), class: "thumbnail-btn btn-sm btn-primary"

@@ -30,7 +30,7 @@
 
 * As an owner, I can create/edit/destroy items for my restaurant. These items should be attached to my specific restaurant, and should not appear on other restaurants' pages. They should appear on the main page for my restaurant.
 
-(Note that we'll be re-purposing the existing Admin functionality to work for individual restaurants. So whenver we talk about features for managing a restaurant from a store owner perspective, this should take place somewhere within the "admin" portion of the site.)
+(Note that we'll be re-purposing the existing Admin functionality to work for individual restaurants. So whenever we talk about features for managing a restaurant from a store owner perspective, this should take place somewhere within the "admin" portion of the site.)
 
 ### Browsing Restaurants
 

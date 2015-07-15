@@ -1,32 +1,31 @@
 .container
-  = form_for [:admin, @restaurant, @item] do |f|
-    %ul
-      - @item.errors.full_messages.each do |error|
-        %li= error
-    %p
-      = f.label :title
-      %br/
-      = f.text_field :title
-    %p
-      = f.label :description
-      %br/
-      = f.text_area :description
-    %p
-      = f.label :price
-      %br/
-      = f.text_field :price
-    %p
-      %img{src: "#{@item.image_file_name}", width: "242", height: "242"}
-      %br/
-      = f.file_field :image
-    %p
-      = f.submit
+  .row.col-lg-6.col-lg-offset-3
+    %h2.form-signin-heading Edit Item
+    = form_for [:admin, @restaurant, @item] do |f|
+      %ul
+        - @item.errors.full_messages.each do |error|
+          %li= error
+      .form-group
+        = f.text_field :title, class: "form-control", placeholder: "Title"
+        %br/
+        = f.text_area :description, class: "form-control", placeholder: "Description"
+        %br/
+        = f.text_field :price, class: "form-control", placeholder: "Price"
+        %p
+          %img{src: "#{@item.image_file_name}", width: "242", height: "242"}
+          %br/
+          = f.file_field :image
+        %p
+          = f.submit "Update Item", class: "btn btn-sm btn-primary"
+        %br
 
-%h2 Categories:
--@item.categories.each do |category|
-  %h2= category.name
-  %h4= link_to "Remove Category", admin_categorization_path(@item.categorizations.find_by(category_id: category.id)), method: :delete
-
-%h2 Add to Category:
--(@restaurant.categories - @item.categories).each do |category|
-  %h2= link_to category.name, admin_categorizations_path(item: @item, category: category), method: :post
+  .row
+    .col-lg-6.col-lg-offset-0
+      %h2 Categories:
+      - @item.categories.each do |category|
+        %h2= category.name
+        = link_to "Remove Category", admin_categorization_path(@item.categorizations.find_by(category_id: category.id)), method: :delete, class: "thumbnail-btn btn-sm btn-danger"
+    .col-lg-6.col-lg-offset-0
+      %h2 Add this item to a Category:
+      - (@restaurant.categories - @item.categories).each do |category|
+        %h2= link_to category.name, admin_categorizations_path(item: @item, category: category), method: :post
