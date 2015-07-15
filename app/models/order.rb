@@ -33,12 +33,6 @@ class Order < ActiveRecord::Base
     state :delivered
   end
 
-  def all_orders
-    # Order.where("restaurant_id = ?", order.restaurant_id)
-    # self.all.select { |order| order.restaurant_id == params[:restaurant_id] }
-    self.all
-  end
-
   def self.paid
     self.with_paid_state
   end
@@ -61,11 +55,8 @@ class Order < ActiveRecord::Base
     self.with_delivered_state
   end
 
-
-
-
   def pay_in_store?
-    ccn == nil && expdate == nil
+    ccn.nil? && expdate.nil?
   end
 
   def add_item(item)

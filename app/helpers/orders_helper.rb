@@ -3,6 +3,9 @@ module OrdersHelper
     item.order_items.where(order_id: item_order.id).first
   end
 
+  def calculate_subtotal(order_item)
+    order_item.quantity * order_item.item.price
+  end
 
   def quantity_price(item, item_order)
     order_item(item, item_order).quantity * item.price

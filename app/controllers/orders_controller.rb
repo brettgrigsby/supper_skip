@@ -30,18 +30,16 @@ class OrdersController < ApplicationController
     redirect_to order
   end
 
-  def delete_item
-    item = Item.find(params[:item_id])
-    order.remove_item(item)
-    redirect_to order
-  end
+  # def delete_item
+  #   item = Item.find(params[:item_id])
+  #   order.remove_item(item)
+  #   redirect_to order
+  # end
 
   def destroy
     order.destroy
     redirect_to root_path
   end
-
-
 
   def checkout
     @address = Address.find_by(order_id: order.id) || Address.create
