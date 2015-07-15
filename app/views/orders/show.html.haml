@@ -23,7 +23,7 @@
               %td #{item.description}
               %td $#{item.price_for_humans}
               %td
-                = form_for 'item', method: 'PUT', :url => {:controller => 'order_items', action: :update, id: order_item(item) } do |f|
+                =form_for 'item', method: 'PUT', :url => {:controller => 'order_items', action: :update, id: order_item(item) } do |f|
                   .field
                     = f.number_field :quantity, :value => order_item(item).quantity
                     = submit_tag "Update", class: "btn btn-primary"
@@ -34,7 +34,7 @@
 
 
 -if signed_in?
-  -unless order.total == 0 || order.empty?
+  -unless order.empty?
     .container
       .row.pull-right
         %ul.nav.nav-pills

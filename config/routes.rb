@@ -16,7 +16,6 @@ Rails.application.routes.draw do
       resources :categories, only: [:new, :create, :edit, :update]
       resources :orders, only: [:index, :show, :edit, :update, :destroy]
       resources :user_roles, only: [:new, :create]
-     # get '/orders/:state', to: 'orders#index'
     end
     resources :categorizations, only: [:create, :destroy]
     resources :items do
@@ -45,7 +44,6 @@ Rails.application.routes.draw do
   get   '/confirm',          to: 'orders#confirm'
   match '/admin_dashboard',  to: 'admin#dashboard',   via: 'get'
   get   '/code',             to: 'pages#code'
-#  delete '/admin/:id/orders', to: 'admin/orders#delete_item', as: "admin_delete_order_item"
   put   '/admin/order_items/:id', to: 'admin/order_items#update'
   match "*a",                to: 'errors#routing_error', via: 'get'
 
