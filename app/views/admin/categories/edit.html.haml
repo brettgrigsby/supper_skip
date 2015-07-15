@@ -1,12 +1,12 @@
 .container
   .row.col-lg-6.col-lg-offset-3
-    %h2.form-signin-heading Create New Category
+    %h2.form-signin-heading Edit Category
     = form_for [:admin, @restaurant, @category] do |f|
       - if @category.errors.any?
         %ul#errors
           - @category.errors.full_messages.each do |error|
             %li= error
       .form-group
-        = f.text_field :name, class: "form-control", placeholder: "Name"
+        = f.text_field :name, class: "form-control", placeholder: "name"
         %br/
-        = f.submit "Create Category", class: "btn btn-large btn-block btn-primary"
+        = f.submit "Submit Changes", class: "btn btn-large btn-block btn-primary", href: "edit_categories_path(@category)"

@@ -7,7 +7,4 @@
   .col-sm-6.col-md-4
   %br
 
-- if current_user.restaurants
-  %h2 Your Restaurant(s)
-  - current_user.restaurants.each do |restaurant|
-    %h4= link_to "edit #{restaurant.name}", edit_restaurant_path(restaurant)
+= link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"

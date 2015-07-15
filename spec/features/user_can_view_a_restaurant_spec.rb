@@ -25,7 +25,7 @@ describe 'a restaurant', type: :feature do
     expect(page).not_to have_content("gum")
   end
 
-  it 'lists out the restaurats items' do
+  it 'lists out the restaurants items' do
     restaurant.items.create!(title: "testwich", description: "be careful bro" , price: 400)
     Item.create!(title: "veggies", description: "not for me!", price: 5)
     visit restaurant_path(restaurant)
