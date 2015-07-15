@@ -13,11 +13,11 @@ describe 'A user who is logged in' do
   include AdminHelper
 
   before do
-    User.create(first_name: "Joe",
-		last_name: "Johnson",
-		email: "joe@johnson.com",
-		password: "password",
-		role: "user")
+    user = User.create(	first_name: "Joe",
+			last_name: "Johnson",
+			email: "joe@johnson.com",
+			password: "password")
+    user.roles.create(title: "user")
     restaurant = Restaurant.create!(name: "testRest", description: "yoyo", slug: "slug")
     item = restaurant.items.create!(	title: "thing",
 					description: "thingy",

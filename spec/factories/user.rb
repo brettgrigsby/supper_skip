@@ -4,7 +4,6 @@ FactoryGirl.define do
     last_name  "Doe"
     email      "j@example.com"
     password   "123456789"
-    role       "admin"
   end
 
   factory :user do
@@ -12,6 +11,5 @@ FactoryGirl.define do
     last_name  "Doe"
     email      "j@example.com"
     password   "123456789"
-    role       "user"
   end
 end

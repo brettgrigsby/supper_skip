@@ -5,8 +5,8 @@ describe 'admin', type: :feature do
     @user = User.create(first_name: "Jane",
                 last_name: "Doe",
                 email: "jane@jane.com",
-                password: "password",
-                role: "admin") 
+                password: "password")
+    @user.roles.create(title: "admin")
     @resturant = @user.restaurants.create!(name: "Restaurant", description: "restaurant description", slug: "rest")
     visit "/"
     first(:link, "Login").click

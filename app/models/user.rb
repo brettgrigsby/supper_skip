@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
             }
 
   has_many :orders
-
+  has_many :user_roles
+  has_many :roles, through: :user_roles
   has_many :restaurants
 
   def full_name
@@ -42,6 +43,10 @@ class User < ActiveRecord::Base
 
   def basket
     orders.where(status: "basket")
+  end
+
+  def admin?
+    roles.pluck(:title).include?("admin")
   end
 
   private

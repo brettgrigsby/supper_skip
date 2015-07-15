@@ -5,8 +5,8 @@ describe 'admin', type: :feature do
     @user = User.create!(	first_name: "Brett", 
 				last_name: "Grigsby", 
 				email: "brett@mail.com", 
-				password: "password", 
-				role: "admin")
+				password: "password") 
+    @user.roles.create(title: "admin")
     @restaurant = @user.restaurants.create!(	name: 'testRest', 
 						description: 'passing or not', 
 						slug: 'slug')

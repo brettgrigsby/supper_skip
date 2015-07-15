@@ -12,9 +12,4 @@ FactoryGirl.define do
     price 32
     restaurant
   end
-
-  # factory :category do
-  #   name "MyCategory"
-  #   item
-  # end
 end

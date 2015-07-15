@@ -1,12 +1,11 @@
 require_relative '../feature_spec_helper'
 
 describe "an admin changes order state" do
-  # let(:restaurant) { Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug') }
-  # let(:current_order) { Order.create!(delivery: true) }
-  # let(:item) { restaurant.items.create!(title: 'myitem', description: 'a item', price: 5 ) }
 
   before do
-    admin = create(:user)
+    admin = User.create(first_name: "Some", last_name: "lady", email: "def@test.com",
+			password: "password")
+    admin.roles.create(title: "admin")
     visit login_path
     fill_in 'email address', :with => admin.email
     fill_in 'password', :with => admin.password
@@ -15,7 +14,6 @@ describe "an admin changes order state" do
     @restaurant = Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug')
     @current_order = @restaurant.orders.create!(delivery: true)
     @current_order = @current_order.items.create!(title: 'myitem', description: 'a item', price: 5 )
-    #@item = @current_order.items.last
   end
 
   it "changes one order from paid to cancelled state" do

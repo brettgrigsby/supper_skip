@@ -61,4 +61,12 @@ class ApplicationController < ActionController::Base
   def cart_loader
     @cart = Cart.new(session[:cart])
   end
+
+  def admin_role
+    Role.find_by(title: "admin")
+  end
+
+  def user_role
+    Role.find_by(title: "user")
+  end
 end

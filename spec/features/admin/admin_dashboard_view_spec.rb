@@ -4,11 +4,11 @@ describe 'the admin dashboard', type: :feature do
   include AdminHelper
 
   before do
-    user = User.create!(first_name: "Brett",
-		last_name: "Grigsby",
-		email: "email@mail.com",
-		password: "password",
-		role: "admin")
+    user = User.create!(first_name: "Brett", 
+		last_name: "Grigsby", 
+		email: "email@mail.com", 
+		password: "password") 
+    user.roles.create(title: "admin")
     @restaurant = user.restaurants.create!(name: "some", description: "thing", slug: "something")
     visit "/"
     first(:link, "Login").click

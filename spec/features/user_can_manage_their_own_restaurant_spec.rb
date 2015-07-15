@@ -7,6 +7,10 @@ describe 'a users restaurant', type: :feature do
 				password: "password")}
   let(:restaurant) { Restaurant.create!(name: "Testaurant", description: "tastes funny", slug: 'testy', user_id: user.id) }
 
+  before do
+    user.roles.create!([{title: "admin"}, {title: "user"}])    
+  end
+
   it 'has a link to edit the restaurant' do
     restaurant.user = user
     visit login_path
