@@ -3,6 +3,7 @@ require_relative '../feature_spec_helper'
 describe 'admin adding staff', type: :feature do
   include AdminHelper
   before do
+    Role.create!([{title: 'cook'}, {title: 'delivery'}])
     @user = User.create!(	first_name: "Brett", 
 				last_name: "Grigsby", 
 				email: "brett@mail.com", 
@@ -30,9 +31,20 @@ describe 'admin adding staff', type: :feature do
     visit admin_dashboard_path
     click_link("Add Staff")
 
-    expect(status).to eq(200)
-    expect(current_path).to eq(new_admin_user_role_path)
+    expect(status_code).to eq(200)
+    expect(current_path).to eq(new_admin_restaurant_user_role_path(@restaurant))
     expect(page).to have_field('email')
     expect(page).to have_button('Add To Staff')
+  end
+
+  it 'creates user user roles for registered users' do
+    user = User.create!(first_name: 'Brett', last_name: 'Grigsby', email: 'brett@test.com', password: "password")
+    visit new_admin_restaurant_user_role_path(@restaurant)
+    fill_in 'email', with: 'brett@test.com'
+    click_button 'Add To Staff'
+
+    expect(current_path).to eq(admin_dashboard_path)
+    binding.pry
+    expect(user.roles.pluck(:title)).to include('cook')
   end
 end
