@@ -20,9 +20,6 @@ class OrderItem < ActiveRecord::Base
     end
   end
 
-  # def calculate_subtotal(order_item)
-  #   order_item.quantity * order_item.item.price
-  # end
   private
 
   def set_default_quantity
