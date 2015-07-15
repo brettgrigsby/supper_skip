@@ -157,7 +157,6 @@ describe "an admin filters orders by state" do
       expect(page).to have_css('.cancelled, .hidden')
       expect(page).to have_css('.ready_for_delivery, .hidden')
       expect(page).to have_css('.out_for_delivery, .hidden')
-      expect(page).to have_css('.delivered, .hidden')
     end
   end
 end
