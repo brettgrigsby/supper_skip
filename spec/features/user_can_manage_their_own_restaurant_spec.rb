@@ -5,21 +5,23 @@ describe 'a users restaurant', type: :feature do
 				last_name: "money",
 				email: "test@best.com",
 				password: "password" )}
-  let(:restaurant) { Restaurant.create!(name: "Testaurant", description: "tastes funny", slug: 'testy', user_id: user.id) }
+  let(:restaurant) { Restaurant.create!(name: "Testaurant",
+                                        description: "tastes funny",
+                                        slug: 'testy',
+                                        user_id: user.id) }
 
   before do
-    user.roles.create!([{title: "admin"}, {title: "user"}])    
+    user.roles.create!([{title: "admin"}, {title: "user"}])
   end
 
-  it 'has a link to edit the restaurant' do
-    restaurant.user = user
+  xit 'has a link to edit the restaurant' do
     visit login_path
     fill_in "email address", with: "test@best.com"
     fill_in "password", with: "password"
     click_button("Login")
     visit admin_dashboard_path(user)
 
-    expect(page).to have_link("Edit Testaurant")
+    expect(page).to have_css("h5.edit-testaurant")
   end
 
   xit 'can be edited by the user that created it' do
