@@ -69,4 +69,8 @@ class ApplicationController < ActionController::Base
   def user_role
     Role.find_by(title: "user")
   end
+
+  def load_restaurant
+    @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
+  end
 end

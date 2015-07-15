@@ -25,4 +25,14 @@ describe 'admin adding staff', type: :feature do
 
     expect(page).to have_link("Add Staff")
   end
+
+  it 'sees form to add users to staff after clicking add staff' do
+    visit admin_dashboard_path
+    click_link("Add Staff")
+
+    expect(status).to eq(200)
+    expect(current_path).to eq(new_admin_user_role_path)
+    expect(page).to have_field('email')
+    expect(page).to have_button('Add To Staff')
+  end
 end

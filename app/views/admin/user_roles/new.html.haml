@@ -1,0 +1,10 @@
+.container
+  = form_tag "/admin/restaurants/#{@restaurant.slug}/user_roles" do
+    %p
+      = label_tag :email, "Enter The New Staff Member's Email"
+      %br/
+      = text_field_tag :email
+    %p
+      = select_tag :role, options_for_select(["Cook", "Delivery"])
+    %p
+      = submit_tag "Add To Staff"

@@ -2,4 +2,4 @@
   - current_user.restaurants.each do |restaurant|
     = link_to restaurant.name, admin_restaurant_path(restaurant), role: "button", :class => "btn btn-primary btn-lg btn-block"
 
-%h2= link_to "Add Staff", new_admin_user_role_path
+    %h4= link_to "Add Staff", new_admin_restaurant_user_role_path(restaurant)

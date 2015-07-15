@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :items, only: [:edit, :update, :destroy, :new, :create]
       resources :categories, only: [:new, :create, :edit, :update]
       resources :orders, only: [:index, :show, :edit, :update, :destroy]
+      resources :user_roles, only: [:new, :create]
      # get '/orders/:state', to: 'orders#index'
     end
     resources :categorizations, only: [:create, :destroy]
@@ -27,7 +28,6 @@ Rails.application.routes.draw do
     end
     resources :categories
     resources :orders, only: [:index, :show, :edit, :update]
-    resources :user_roles, only: [:new, :create]
   end
 
   post '/cart', to: 'cart_items#create'
