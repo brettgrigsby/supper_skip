@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714223604) do
+ActiveRecord::Schema.define(version: 20150715141511) do
 
   create_table "addresses", force: true do |t|
     t.integer  "order_id"
@@ -121,8 +121,10 @@ ActiveRecord::Schema.define(version: 20150714223604) do
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "restaurant_id"
   end
 
+  add_index "user_roles", ["restaurant_id"], name: "index_user_roles_on_restaurant_id"
   add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id"
   add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id"
 

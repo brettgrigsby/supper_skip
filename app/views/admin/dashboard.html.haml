@@ -3,4 +3,4 @@
     =link_to restaurant.name, admin_restaurant_path(restaurant), :class => "btn btn-primary btn-long btn-inline"
     =link_to "Orders", admin_restaurant_orders_path(restaurant), :class => "btn btn-primary btn-long btn-inline"
     %br
-
+    %h4= link_to "Add Staff", new_admin_restaurant_user_role_path(restaurant)

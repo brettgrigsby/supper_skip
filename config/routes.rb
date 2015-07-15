@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :items, only: [:edit, :update, :destroy, :new, :create]
       resources :categories, only: [:new, :create, :edit, :update]
       resources :orders, only: [:index, :show, :edit, :update, :destroy]
+      resources :user_roles, only: [:new, :create]
     end
     resources :categorizations, only: [:create, :destroy]
     resources :items do
