@@ -1,6 +1,6 @@
 class Admin::ItemsController < AdminController
   before_action :find_item, only: [:edit, :update, :destroy, :show]
-  before_action :find_restaurant, only: [:edit, :update, :new, :create]
+  before_action :find_restaurant, only: [:edit, :update, :new, :create, :destroy]
   before_action :check_user, only: [:edit, :index]
 
   def index
@@ -35,7 +35,7 @@ class Admin::ItemsController < AdminController
 
   def destroy
     @item.destroy
-    redirect_to admin_items_path
+    redirect_to admin_restaurant_path(@restaurant)
   end
 
   def add_category
