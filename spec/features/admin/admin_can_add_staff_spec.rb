@@ -46,4 +46,8 @@ describe 'admin adding staff', type: :feature do
     expect(current_path).to eq(admin_dashboard_path)
     expect(user.roles.pluck(:title)).to include('cook')
   end
+
+  it 'sends an email when a user is not registered' do
+
+  end
 end
