@@ -30,5 +30,5 @@
             ="Total: $#{order.total_price_for_humans}"
           %h4.pull-left
             - if order.can_cancel?
-              = link_to "Cancel Order", admin_restaurant_order_path(order.restaurant_id, order), method: "put", :role => "button", :class => "btn btn-danger", "data-action" => "cancelled"
+              = link_to "Cancel Order", admin_restaurant_order_path(order.restaurant_id, order), method: :put, :role => "button", :class => "btn btn-danger", "data-action" => "cancelled"
 

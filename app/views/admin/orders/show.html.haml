@@ -1,7 +1,7 @@
 .container
   .order-header
     %h2= "Order: #{@user_order.id}"
-    =link_to "Resturn to Orders", admin_restaurant_orders_path(@user_order.restaurant_id)
+    =link_to "Return to Orders", admin_restaurant_orders_path(@user_order.restaurant)
     .order-info-table-div
       %table.table.table-striped.order-info-table
         %thead

@@ -7,10 +7,6 @@ RSpec.describe Order, :type => :model do
   let(:item2) { restaurant.items.create!(title: 'myitem2', description: 'a 2nd item', price: 5 ) }
   let(:order) { restaurant.orders.create!(delivery: true) }
 
-  # let(:address) do
-  #   Address.new(order_id: 1, street_1: "123 Washington St", city: "Denver", state: "CO", zip: "80202")
-  # end
-
   it "belongs to one user" do
     user = User.new
     order.user_id = user.id
@@ -45,15 +41,8 @@ RSpec.describe Order, :type => :model do
     refute order.items.include? item
   end
 
-  xit 'increases quantity if item is in order' do #this doesn't work
-    order.add_item(item)
-    order.add_item(item)
-   # assert order.items.length == 1
-  end
-
-  it 'tells arrival time on payment' do
-    order.paid?
-    order.payment_received!
+  it 'tells arrival time on creation' do
+    order.ready_for_prep?
     assert_equal (order.updated_at + 45.minutes).strftime('%l:%M %p'), order.arrival_time
   end
 

@@ -8,11 +8,6 @@ class Order < ActiveRecord::Base
   belongs_to :address
 
   workflow do
-    state :paid do
-      event :payment_received, :transitions_to => :ready_for_prep
-      event :cancel, :transitions_to => :cancelled
-    end
-
     state :ready_for_prep do
       event :in_queue, :transitions_to => :in_preparation
       event :cancel, :transitions_to => :cancelled
@@ -33,24 +28,26 @@ class Order < ActiveRecord::Base
     state :delivered
   end
 
-  def self.paid
-    self.with_paid_state
-  end
   def self.ready_for_prep
     self.with_ready_for_prep_state
   end
+
   def self.cancelled
     self.with_cancelled_state
   end
+
   def self.in_preparation
     self.with_in_preparation_state
   end
+
   def self.ready_for_delivery
     self.with_ready_for_delivery_state
   end
+
   def self.out_for_delivery
     self.with_out_for_delivery_state
   end
+
   def self.delivered
     self.with_delivered_state
   end
@@ -80,7 +77,6 @@ class Order < ActiveRecord::Base
       sum += order_item.quantity * order_item.item.price
     end
   end
-
 
   def total_for_humans
     sprintf("%.2f",(total.to_f/100))

@@ -1,63 +1,71 @@
 require_relative '../feature_spec_helper'
 
-describe "an admin changes order state" do
+describe "an admin changes order state", type: :feature do
 
   before do
-    admin = User.create(first_name: "Some", last_name: "lady", email: "def@test.com",
-			password: "password")
-    admin.roles.create(title: "admin")
-    visit login_path
-    fill_in 'email address', :with => admin.email
-    fill_in 'password', :with => admin.password
-    click_button("Login")
+    @admin = User.create(first_name: "Some",
+                         last_name: "lady",
+                         email: "def@test.com",
+		                     password: "password")
 
-    @restaurant = Restaurant.create!(name: 'testRest', description: 'passing or not', slug: 'slug')
-    @current_order = @restaurant.orders.create!(delivery: true)
-    @current_order = @current_order.items.create!(title: 'myitem', description: 'a item', price: 5 )
+    @admin.roles.create(title: "admin")
+
+    visit login_path
+
+    fill_in 'email address', :with => @admin.email
+    fill_in 'password',      :with => @admin.password
+
+    click_button("Login")
   end
 
-  xit "changes one order from paid to cancelled state" do
+  it "from ready_for_prep to cancelled state" do
+    assert @admin.admin?, 'You are not an admin!'
+
+    @restaurant = @admin.restaurants.create!(name: 'testRest',
+                                             description: 'passing or not',
+                                             slug: 'a-cool-slug')
+
+    refute @admin.restaurants.empty?, "No restaurant created!"
+
+    @new_order = @admin.restaurants.first.orders.create!(delivery: true)
+    @new_order.update(user_id: @admin.id)
+
+    assert @new_order.ready_for_prep?, "Default state not set!"
+
     visit admin_restaurant_orders_path(@restaurant)
 
-    within "h4.pull-left" do
-      click_link_or_button 'Cancel Order'
-    end
+    click_button "Ready for Preparation"
 
-    expect(current_url).to eq admin_orders_url(scope: 'cancelled')
-    within ".order-display" do
-      expect(page).to have_content order.created_at.to_formatted_s(:long_ordinal)
-      expect(page).to have_content "Order ##{order.id}"
-    end
+    click_link 'Cancel Order'
+
+    expect(current_path).to eq(admin_restaurant_orders_path(@restaurant))
+    expect(page).to have_content @new_order.created_at.to_formatted_s(:long_ordinal)
+    expect(page).to have_content "Order ##{@new_order.id}"
+
+
+
+
   end
 
-  xit "changes one order from ready_for_prep to cancelled state" do
-    visit admin_restaurant_orders_path(@restaurant, scope: 'cancelled')
+  it 'cannot see button to cancel order once order is being prepaired' do
 
-    within "h4.pull-left" do
-      click_link_or_button 'Cancel Order'
-    end
+    restaurant = @admin.restaurants.create!(name: 'testRest2',
+                                             description: 'passing or not',
+                                             slug: 'a-cool-slug2')
 
-    expect(current_url).to eq admin_orders_url(scope: 'cancelled')
-    within ".order-display" do
-      expect(page).to have_content order.created_at.to_formatted_s(:long_ordinal)
-      expect(page).to have_content "Order ##{order.id}"
-    end
+    refute @admin.restaurants.empty?, "No restaurant created!"
+
+    new_order = @admin.restaurants.first
+    new_order = new_order.orders.create!(delivery: true,
+                                         workflow_state: :in_preparation)
+    new_order.update(user_id: @admin.id)
+
+    refute new_order.ready_for_prep?, "Should be in_preparation"
+    assert new_order.in_preparation?, "Default state not set!"
+
+    visit admin_restaurant_orders_path(restaurant)
+
+    click_button "In Preparation"
+    expect(page).to_not have_content('cancel order')
   end
-
-
-
-  xit "changes one order from paid to completed state" do
-    visit admin_restaurant_orders_path(@restaurant, scope: 'paid')
-
-    within "h4.pull-left" do
-      click_link_or_button 'Mark as Completed'
-    end
-
-    expect(current_url).to eq admin_orders_url(scope: 'completed')
-    within ".order-display" do
-      expect(page).to have_content order.created_at.to_formatted_s(:long_ordinal)
-      expect(page).to have_content "Order ##{order.id}"
-    end
-  end
-
 end
