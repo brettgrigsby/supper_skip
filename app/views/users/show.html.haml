@@ -11,19 +11,20 @@
       %br
       = link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
 
--if current_user.roles.pluck("title").include?("cook")
+-if current_user.staff?
   .row
   .col-md-offset-3
     .col-md-6
-    %table.table
-      %thead
-      %tr.text-center
-        %th Id
-        %th Next State
-        %th Current State
-      -@orders.each do |order|
-        %tr
-          %td= "#{order.id} "
-          %td= link_to("Begin Preparation ", cook_path(order), method: :put)
-          %td= " #{order.current_state}"
-    .col-md-3
+      -current_user.jobs.each do |title, retaurant|
+        -if title == 'cook'
+          %table.table
+            %thead
+            %tr.text-center
+              %th Id
+              %th Next State
+              %th Current State
+            -@orders.each do |order|
+              %tr
+                %td= "#{order.id} "
+                %td= link_to("Begin Preparation ", cook_path(order), method: :put)
+                %td= " #{order.current_state}"
