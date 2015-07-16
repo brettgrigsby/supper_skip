@@ -1,6 +1,4 @@
 .container
   %h3 Your Order is on its Way!
 
-  Your order will arrive at #{order.arrival_time}
-
-  = render partial: 'orders/summary'
+  = render partial: 'orders/summary', locals: {order: order}

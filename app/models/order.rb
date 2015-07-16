@@ -74,7 +74,7 @@ class Order < ActiveRecord::Base
 
   def total
     order_items.reduce(0) do |sum, order_item|
-      sum += order_item.quantity * order_item.item.price
+      sum + (order_item.quantity * order_item.item.price)
     end
   end
 
@@ -100,6 +100,12 @@ class Order < ActiveRecord::Base
 
   def arrival_time
     (updated_at + 45.minutes).strftime('%l:%M %p')
+  end
+
+  def items_with_quantity
+    order_items.map do |order_item|
+      [order_item.item, order_item.quantity]
+    end
   end
 
   private
