@@ -1,10 +1,12 @@
 .container
-  = flash[:success]
-  %h3= "Hello, #{current_user.first_name.capitalize}!"
-  %h3 Your Info
-  %h5= current_user.name
-  %h5= current_user.email
-  .col-sm-6.col-md-4
-  %br
-
-= link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
+  .row
+    .col-lg-6.col-lg-offset-3
+      = flash[:success]
+      %h1= "Hello, #{current_user.first_name.capitalize}!"
+      %br
+      %h2 Your Info
+      %h3= "Name: #{current_user.name}"
+      %h3= "Email: #{current_user.email}"
+      .col-sm-6.col-md-4
+      %br
+      = link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
