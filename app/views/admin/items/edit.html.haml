@@ -1,6 +1,6 @@
 .container
   .row.col-lg-6.col-lg-offset-3
-    %h2.form-signin-heading Edit Item
+    %h2.form-edititem-heading Edit Item
     = form_for [:admin, @restaurant, @item] do |f|
       %ul
         - @item.errors.full_messages.each do |error|
@@ -12,7 +12,7 @@
         %br/
         = f.text_field :price, class: "form-control", placeholder: "Price"
         %p
-          %img{src: "#{@item.image_file_name}", width: "242", height: "242"}
+          %img{:src => "#{@item.image_file_name}", width: "242", height: "242"}
           %br/
           = f.file_field :image
         %p

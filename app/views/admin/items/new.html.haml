@@ -1,23 +1,21 @@
 .container
-  = form_for [:admin, @restaurant, @item] do |f|
-    %ul
-      - @item.errors.full_messages.each do |error|
-        %li= error
-    %p
-      = f.label :title
-      %br/
-      = f.text_field :title
-    %p
-      = f.label :description
-      %br/
-      = f.text_area :description
-    %p
-      = f.label :price
-      %br/
-      = f.text_field :price
-    %p
-      = f.label :image
-      %br/
-      = f.file_field :image
-    %p
-      = f.submit
+  .row.col-lg-6.col-lg-offset-3
+    %h2.form-additem-heading Add Item
+    = form_for [:admin, @restaurant, @item] do |f|
+      %ul
+        - @item.errors.full_messages.each do |error|
+          %li= error
+      .form-group
+        = f.text_field :title, class: "form-control", placeholder: "Title"
+        %br/
+        = f.text_area :description, class: "form-control", placeholder: "Description"
+        %br/
+        = f.text_field :price, class: "form-control", placeholder: "Price"
+        %br
+        %p
+          %img{:src => "#{@item.image_file_name}", width: "242", height: "242"}
+          %br/
+          = f.file_field :image
+        %p
+          = f.submit "Create Item", class: "btn btn-sm btn-primary"
+

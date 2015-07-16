@@ -26,7 +26,6 @@ describe 'admin', type: :feature do
     fill_in "Title", with: "NewItem"
     fill_in "Description", with: "NewItemDescription"
     fill_in "Price", with: 20
-    attach_file "Image", 'spec/fixtures/missing.jpg'
     click_button "Create Item"
 
     expect(page).to have_content "NewItem"
