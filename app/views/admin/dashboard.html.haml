@@ -4,7 +4,7 @@
   %h2 Your Restaurant(s)
   - current_user.restaurants.each do |restaurant|
     =link_to restaurant.name, admin_restaurant_path(restaurant), :class => "btn btn-primary btn-long btn-inline"
-    =link_to "Orders", admin_restaurant_orders_path(restaurant), :class => "btn btn-primary btn-long btn-inline"
+    =link_to "Orders", admin_restaurant_orders_path(restaurant), :class => "btn btn-success btn-long btn-inline"
     %br
     %h5= link_to "Add Staff", new_admin_restaurant_user_role_path(restaurant), :class => "inline #{restaurant.name}-staff"
     %h5= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant), class: "inline edit-#{restaurant.name}"
