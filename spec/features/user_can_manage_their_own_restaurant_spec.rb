@@ -24,14 +24,14 @@ describe 'a users restaurant', type: :feature do
     expect(page).to have_css("h5.edit-testaurant")
   end
 
-  xit 'can be edited by the user that created it' do
+  it 'can be edited by the user that created it' do
     restaurant.user = user
     visit login_path
     fill_in "email address", with: "test@best.com"
     fill_in "password", with: "password"
     click_button("Login")
-    visit admin_dashboard_path(user)
-    click_link("edit Testaurant")
+    visit admin_dashboard_path
+    click_link("Edit Testaurant")
 
     expect(current_path).to eq(edit_restaurant_path(restaurant))
 
@@ -43,7 +43,7 @@ describe 'a users restaurant', type: :feature do
     expect(page).not_to have_content("Testaurant")
   end
 
-  xit 'cannot be edited by users outside of its creator' do
+  it 'cannot be edited by users outside of its creator' do
     user2 = User.create!(first_name: "Other",
 			last_name: "Person",
 			email: "other@person.com",

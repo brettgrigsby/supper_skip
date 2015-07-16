@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :cooks
   resources :categories,  only: [:index, :show]
-  resources :users,       only: [:new, :create, :show, :index ]
+  resources :users,       only: [:new, :create, :show, :index, :edit, :update ]
   resources :sessions,    only: [:new, :create, :destroy]
   resources :order_items, only: [:update]
   resources :orders,      only: [:new, :create]
@@ -34,7 +34,8 @@ Rails.application.routes.draw do
   get '/cart', to: 'cart_items#index'
   put '/cart', to: 'cart_items#update'
 
-
+  get   '/staff_signup',     to: 'sessions#staff_signup'
+  post  '/staff_signup',     to: 'sessions#staff_verify'
   get   '/menu',             to: 'items#index'
   match '/about_us',         to: 'pages#about_us',    via: 'get'
   match '/signup',           to: 'users#new',         via: 'get'
