@@ -8,8 +8,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    redirect_to root_path unless current_user
+   redirect_to root_path unless current_user
+   @orders = Order.all.with_ready_for_prep_state
   end
+
   def create
     @user = User.new(user_params)
     @user.roles << user_role

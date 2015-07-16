@@ -14,3 +14,11 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+app/assets/javascripts/cooks.js.coffee
+app/assets/javascripts/deliveries.js.coffee
+app/assets/stylesheets/cooks.css.scss
+app/assets/stylesheets/deliveries.css.scss
+app/helpers/cooks_helper.rb
+app/helpers/deliveries_helper.rb
+spec/controllers/cooks_controller_spec.rb
+spec/controllers/deliveries_controller_spec.rb
