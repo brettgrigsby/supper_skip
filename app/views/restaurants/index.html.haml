@@ -1,10 +1,9 @@
-
--#- if signed_in?
 %br
-= link_to "Create A Restaurant", new_restaurant_path, class: "thumbnail-btn btn btn-primary"
-%br
+.container
+  .row.col-lg-6.col-lg-offset-3
+    = link_to "Create A Restaurant", new_restaurant_path, class: "btn btn-large btn-block btn-primary"
+%h1 Our Venues
 -@restaurants.each do |restaurant|
-  %h1= link_to restaurant.name, restaurant_path(restaurant)
-  %h3= restaurant.description
+  %h2= link_to restaurant.name, restaurant_path(restaurant), class: "btn btn-large btn-success"
+  %h4= restaurant.description
   %br
--#  =render partial: 'layouts/shared/marketing_containers'
