@@ -14,16 +14,6 @@ describe 'a users restaurant', type: :feature do
     user.roles.create!([{title: "admin"}, {title: "user"}])
   end
 
-  xit 'has a link to edit the restaurant' do
-    visit login_path
-    fill_in "email address", with: "test@best.com"
-    fill_in "password", with: "password"
-    click_button("Login")
-    visit admin_dashboard_path(user)
-
-    expect(page).to have_css("h5.edit-testaurant")
-  end
-
   it 'can be edited by the user that created it' do
     restaurant.user = user
     visit login_path
