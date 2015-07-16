@@ -38,7 +38,7 @@ User.find(4).user_roles.last.update(restaurant_id: 1)
 User.find(5).user_roles.last.update(restaurant_id: 1)
 
 1.upto(30) do |v|
-  Category.create! ({ name: "Category#{v}", restaurant_id: rand(1..v) })
+  Category.create! ({ name: "Category#{v}", restaurant_id: rand(1..10) })
 end
 
 1.upto(500) do |v|
