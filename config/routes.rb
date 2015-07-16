@@ -3,7 +3,8 @@ Rails.application.routes.draw do
    resources :items,       only: [:index, :show]
  end
 
-  resources :cooks
+  resources :cooks, only: [:update]
+  resources :deliveries, only: [:update]
   resources :categories,  only: [:index, :show]
   resources :users,       only: [:new, :create, :show, :index, :edit, :update ]
   resources :sessions,    only: [:new, :create, :destroy]

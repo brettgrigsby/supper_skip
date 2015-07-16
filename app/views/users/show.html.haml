@@ -15,25 +15,30 @@
   .row
   .col-md-offset-3
     .col-md-6
-      -current_user.jobs.each do |title, orders|
+      -current_user.jobs.each do |title, role_orders|
         %table.table
           %thead
           %tr.text-center
             %th Id
             %th Next State
             %th Current State
-          %h2 Cook
-          -orders.each do |order|
+          %h2= title.upcase
+          -role_orders.each do |order|
             %tr
-              -if order.current_state == :ready_for_prep
+              -if order.current_state.to_s == 'ready_for_prep'
                 %td= "#{order.id} "
                 %td= link_to("Begin Preparation ", cook_path(order), method: :put)
                 %td= " #{order.current_state}"
-              -else
+              -elsif order.current_state.to_s == 'in_preparation'
                 %td= "#{order.id} "
                 %td= link_to("Preparation complete", cook_path(order), method: :put)
                 %td= " #{order.current_state}"
-
-
-
-
+            %tr
+              -if order.current_state.to_s == 'ready_for_delivery'
+                %td= "#{order.id} "
+                %td= link_to("Begin Delivery ", delivery_path(order), method: :patch)
+                %td= " #{order.current_state}"
+              -elsif order.current_state.to_s == 'out_for_delivery'
+                %td= "#{order.id} "
+                %td= link_to("Delivery Complete", delivery_path(order), method: :patch)
+                %td= " #{order.current_state}"
