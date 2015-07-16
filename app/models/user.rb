@@ -55,8 +55,15 @@ class User < ActiveRecord::Base
 
   def jobs
     user_roles.map do |user_role|
+      restaurant = Restaurant.find(user_role.restaurant_id) if user_role.restaurant_id
+      role = Role.find(user_role.role_id).title
+      if role == 'cook'
+        orders = restaurant.orders.with_ready_for_prep_state + restaurant.orders.with_in_preparation_state
+      elsif role == 'delivery'
+        orders = restaurant.orders.with_ready_for_delivery_state + restaurant.orders.with_out_for_delivery_state
+      end
       if user_role.restaurant_id
-      	[Role.find(user_role.role_id).title, Restaurant.find(user_role.restaurant_id)]
+      	[role, orders]
       else
         nil
       end
