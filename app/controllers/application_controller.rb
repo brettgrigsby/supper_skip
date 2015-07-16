@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user, :signed_in?, :order
+  helper_method :current_user, :signed_in?, :order, :load_restaurant
   before_action :cart_loader
 
   def routing_error

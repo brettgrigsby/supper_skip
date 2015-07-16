@@ -41,10 +41,6 @@ describe "an admin changes order state", type: :feature do
     expect(current_path).to eq(admin_restaurant_orders_path(@restaurant))
     expect(page).to have_content @new_order.created_at.to_formatted_s(:long_ordinal)
     expect(page).to have_content "Order ##{@new_order.id}"
-
-
-
-
   end
 
   it 'cannot see button to cancel order once order is being prepaired' do
