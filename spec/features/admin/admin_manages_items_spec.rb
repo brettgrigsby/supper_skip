@@ -8,9 +8,9 @@ describe 'a restaurant owner', type: :feature do
   before do
     user.roles.create(title: "admin")
     user.restaurants.create!(name: "Restaurant", description: "restaurant description", slug: "rest")
-    user.restaurants.first.items.create(title: "Thing", 
+    user.restaurants.first.items.create(title: "Thing",
 					description: "item description",
-					price: 200)					
+					price: 200)
     visit "/"
     first(:link, "Login").click
 

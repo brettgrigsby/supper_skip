@@ -58,7 +58,9 @@ class User < ActiveRecord::Base
       restaurant = Restaurant.find(user_role.restaurant_id) if user_role.restaurant_id
       role = Role.find(user_role.role_id).title
       if role == 'cook'
-        orders = restaurant.orders.with_ready_for_prep_state + restaurant.orders.with_in_preparation_state
+        unless restaurant.nil?
+          orders = restaurant.orders.with_ready_for_prep_state + restaurant.orders.with_in_preparation_state
+        end
       elsif role == 'delivery'
         orders = restaurant.orders.with_ready_for_delivery_state + restaurant.orders.with_out_for_delivery_state
       end

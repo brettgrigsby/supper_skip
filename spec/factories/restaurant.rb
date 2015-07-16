@@ -1,12 +1,11 @@
 FactoryGirl.define do
 
-  sequence(:name) { |n| "The Dawg Pound#{n}" }
-  sequence(:slug) { |n| "DawgyDawg#{n}" }
 
   factory :restaurant do
-    name
+    sequence(:name) { |n| "The Dawg Pound#{n}" }
     description "Ruff"
-    slug
+    sequence(:slug) { |n| "DawgyDawg#{n}" }
+    user
   end
 end
 
