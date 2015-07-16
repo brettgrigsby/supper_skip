@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
     end
 
     state :in_preparation do
-      event :order_processed, :transitions_to => :ready_for_delivery
+      event :processed, :transitions_to => :ready_for_delivery
     end
 
     state :ready_for_delivery do
