@@ -27,14 +27,14 @@ RSpec.describe User, :type => :model do
   end
 
   it 'is invalid without a unique email' do
-    create :user
-    expect { 
-      create :user 
+    create :user, email: 'joe@smo.com'
+    expect {
+      create :user, email: 'joe@smo.com'
     }.to raise_exception ActiveRecord::RecordInvalid
 
-    expect { 
-      create :user, :email => "J@EXAMPle.com" 
-    }.to raise_exception ActiveRecord::RecordInvalid
+    expect {
+      create :user, :email => "J@EXAMPle.com"
+    }.to raise_exception ActiveRecord::RecordNotSaved
   end
 
   it "is invalid without a password" do

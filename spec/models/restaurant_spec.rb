@@ -10,13 +10,14 @@ RSpec.describe Restaurant, :type => :model do
   end
 
   it 'has a unique name' do
-    create :restaurant
-    expect { create :restaurant }.to raise_exception ActiveRecord::RecordInvalid
+    create :restaurant, name: 'not unique'
+    expect { create :restaurant, name: 'not unique'
+}.to raise_exception ActiveRecord::RecordInvalid
   end
 
   it 'has a unique slug' do
-    create :restaurant
-    expect { create :restaurant, :name => "dogdog" }.to raise_exception ActiveRecord::RecordInvalid
+    create :restaurant, slug: 'no'
+    expect { create :restaurant, slug: 'no' }.to raise_exception ActiveRecord::RecordInvalid
   end
 
   it 'is not valid without a description' do
