@@ -49,9 +49,24 @@ class User < ActiveRecord::Base
     roles.pluck(:title).include?("admin")
   end
 
+  def staff?
+    roles.pluck(:title).include?("cook" || "delivery")
+  end
+
+  def jobs
+    user_roles.map do |user_role|
+      if user_role.restaurant_id
+      	[Role.find(user_role.role_id).title, Restaurant.find(user_role.restaurant_id)]
+      else
+        nil
+      end
+    end - [nil]
+  end
+
   private
 
   def create_remember_token
     self.remember_token = User.digest(User.new_remember_token)
   end
+
 end
